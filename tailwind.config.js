@@ -12,30 +12,43 @@ export default {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       colors: {
-        // Customize your palette here
-        primary: {
-          50:  '#eef2ff',
-          100: '#e0e7ff',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          900: '#1e1b4b',
+        terminal: {
+          green:     '#00c853',
+          'green-dim': '#00843a',
+          'green-glow': '#00ff6a',
+          bg:        '#0a0d0a',
+          'bg-card': '#0f140f',
+          border:    '#1a2e1a',
+          muted:     '#4a7a4a',
         },
-        accent: '#06b6d4', // cyan-500
       },
       animation: {
-        'fade-in': 'fadeIn 0.6s ease-out',
+        'fade-in':  'fadeIn 0.6s ease-out',
         'slide-up': 'slideUp 0.6s ease-out',
+        'blink':    'blink 1s step-end infinite',
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0' },
+          '0%':   { opacity: '0' },
           '100%': { opacity: '1' },
         },
         slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '0%':   { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%':      { opacity: '0' },
+        },
+        glowPulse: {
+          '0%, 100%': { textShadow: '0 0 8px #00c853' },
+          '50%':      { textShadow: '0 0 20px #00c853, 0 0 40px #00c853' },
+        },
+      },
+      boxShadow: {
+        'terminal': '0 0 20px rgba(0, 200, 83, 0.15)',
+        'terminal-lg': '0 0 40px rgba(0, 200, 83, 0.2)',
       },
     },
   },

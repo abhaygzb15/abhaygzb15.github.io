@@ -3,21 +3,27 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply scroll-smooth;
-  }
-
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-white text-gray-900 font-sans antialiased;
+    @apply bg-terminal-bg text-gray-100 font-mono antialiased;
   }
 
-  /* Dark mode body */
-  .dark body {
-    @apply bg-gray-950 text-gray-100;
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0d0a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1a2e1a;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00843a;
   }
 }
 
@@ -28,5 +34,13 @@
 
   .container-max {
     @apply max-w-6xl mx-auto;
+  }
+
+  .terminal-text {
+    @apply text-terminal-green font-mono;
+  }
+
+  .terminal-glow {
+    text-shadow: 0 0 10px rgba(0, 200, 83, 0.6);
   }
 }
