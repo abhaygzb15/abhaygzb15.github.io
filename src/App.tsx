@@ -1,4 +1,5 @@
 import Navbar from './components/Navbar/Navbar'
+import SocialSidebar from './components/SocialSidebar/SocialSidebar'
 import Hero from './components/Hero/Hero'
 import About from './components/About/About'
 import Skills from './components/Skills/Skills'
@@ -10,6 +11,7 @@ function App() {
   return (
     <div className="min-h-screen bg-terminal-bg text-gray-100">
       <Navbar />
+      <SocialSidebar />
       <main>
         <Hero />
         <About />
