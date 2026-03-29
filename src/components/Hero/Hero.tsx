@@ -1,8 +1,8 @@
 import MatrixRain from './MatrixRain'
 
-// TODO: Place your photo at src/assets/abhay.jpg
+// TODO: Place your photo at src/assets/picture.png
 // Then uncomment the import below and swap the placeholder
-// import abhayPhoto from '../../assets/abhay.jpg'
+import abhayPhoto from '../../assets/picture.png'
 
 const Hero = () => {
   return (
@@ -95,7 +95,7 @@ const Hero = () => {
               {/* Photo frame */}
               <div className="relative w-72 h-80 rounded-2xl overflow-hidden border border-terminal-green/30 shadow-terminal-lg">
                 {/*
-                  TODO: Once you've placed abhay.jpg in src/assets/, replace the
+                  TODO: Once you've placed picture.png in src/assets/, replace the
                   placeholder div below with:
 
                   <img
@@ -106,14 +106,14 @@ const Hero = () => {
                 */}
                 <div className="w-full h-full bg-terminal-bg-card flex flex-col items-center justify-center gap-2 text-terminal-muted font-mono text-xs">
                   <span className="text-terminal-green text-2xl">[ AP ]</span>
-                  <span>place abhay.jpg in</span>
+                  <span>place picture.png in</span>
                   <span className="text-terminal-green">src/assets/</span>
                 </div>
               </div>
 
               {/* Terminal label below photo */}
               <p className="mt-3 text-center font-mono text-xs text-terminal-muted">
-                <span className="text-terminal-green">{'>'}_</span> abhay.jpg
+                <span className="text-terminal-green">{'>'}_</span> picture.png
               </p>
             </div>
           </div>
