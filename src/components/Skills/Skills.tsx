@@ -1,25 +1,23 @@
-import { useState, useRef, useCallback } from 'react'
-
 type SkillSize = 'xl' | 'lg' | 'md' | 'sm'
 
 interface SkillItem {
   name: string
   size: SkillSize
-  x: number   // % from container left
-  y: number   // % from container top
+  x: number
+  y: number
   delay: number
   dur: number
 }
 
 const sizeStyles: Record<SkillSize, { fontSize: string; fontWeight: number }> = {
-  xl: { fontSize: '2rem',   fontWeight: 700 },
-  lg: { fontSize: '1.5rem', fontWeight: 600 },
-  md: { fontSize: '1.1rem', fontWeight: 500 },
+  xl: { fontSize: '2rem',    fontWeight: 700 },
+  lg: { fontSize: '1.5rem',  fontWeight: 600 },
+  md: { fontSize: '1.1rem',  fontWeight: 500 },
   sm: { fontSize: '0.85rem', fontWeight: 400 },
 }
 
-const initialSkills: SkillItem[] = [
-  // ── xl: most prominent ──
+const skills: SkillItem[] = [
+  // ── xl ──
   { name: 'Python',           size: 'xl',  x: 20,  y: 38,  delay: 0,    dur: 4.5 },
   { name: 'Java',             size: 'xl',  x: 48,  y: 44,  delay: 0.8,  dur: 5.0 },
   { name: 'Machine Learning', size: 'xl',  x: 33,  y: 20,  delay: 0.4,  dur: 5.2 },
@@ -38,7 +36,7 @@ const initialSkills: SkillItem[] = [
   { name: 'Git',              size: 'md',  x: 50,  y: 72,  delay: 1.3,  dur: 4.2 },
   { name: 'Android Studio',   size: 'md',  x: 26,  y: 70,  delay: 1.0,  dur: 4.6 },
 
-  // ── sm: scattered around edges ──
+  // ── sm ──
   { name: 'C',                size: 'sm',  x: 3,   y: 7,   delay: 0.2,  dur: 3.8 },
   { name: 'MATLAB',           size: 'sm',  x: 14,  y: 5,   delay: 1.4,  dur: 3.9 },
   { name: 'R',                size: 'sm',  x: 27,  y: 8,   delay: 0.7,  dur: 3.6 },
@@ -54,79 +52,13 @@ const initialSkills: SkillItem[] = [
 ]
 
 const WrenchIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
-    className="w-5 h-5 text-terminal-green"
-  >
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5 text-terminal-green">
     <path strokeLinecap="round" strokeLinejoin="round"
       d="M11.42 15.17L17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l5.654-4.655m5.896-3.42c.21-.328.31-.686.29-1.043a3.86 3.86 0 0 0-3.53-3.75 3.9 3.9 0 0 0-2.6.79L6.75 6.75" />
   </svg>
 )
 
 const Skills = () => {
-  const [skills, setSkills] = useState<SkillItem[]>(initialSkills)
-  const [dragging, setDragging] = useState<string | null>(null)
-  const dragOffset = useRef({ x: 0, y: 0 })
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  const getContainerRect = () => containerRef.current?.getBoundingClientRect()
-
-  const handleMouseDown = useCallback((e: React.MouseEvent, name: string) => {
-    e.preventDefault()
-    const rect = getContainerRect()
-    if (!rect) return
-    const item = skills.find(s => s.name === name)!
-    const itemPxX = (item.x / 100) * rect.width
-    const itemPxY = (item.y / 100) * rect.height
-    const mouseX = e.clientX - rect.left
-    const mouseY = e.clientY - rect.top
-    dragOffset.current = { x: mouseX - itemPxX, y: mouseY - itemPxY }
-    setDragging(name)
-  }, [skills])
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!dragging) return
-    const rect = getContainerRect()
-    if (!rect) return
-    const mouseX = e.clientX - rect.left
-    const mouseY = e.clientY - rect.top
-    const newX = ((mouseX - dragOffset.current.x) / rect.width) * 100
-    const newY = ((mouseY - dragOffset.current.y) / rect.height) * 100
-    setSkills(prev => prev.map(s =>
-      s.name === dragging
-        ? { ...s, x: Math.max(0, Math.min(88, newX)), y: Math.max(0, Math.min(88, newY)) }
-        : s
-    ))
-  }, [dragging])
-
-  const handleMouseUp = useCallback(() => setDragging(null), [])
-
-  // Touch support
-  const handleTouchStart = useCallback((e: React.TouchEvent, name: string) => {
-    const rect = getContainerRect()
-    if (!rect) return
-    const touch = e.touches[0]
-    const item = skills.find(s => s.name === name)!
-    dragOffset.current = {
-      x: touch.clientX - rect.left - (item.x / 100) * rect.width,
-      y: touch.clientY - rect.top  - (item.y / 100) * rect.height,
-    }
-    setDragging(name)
-  }, [skills])
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!dragging) return
-    const rect = getContainerRect()
-    if (!rect) return
-    const touch = e.touches[0]
-    const newX = ((touch.clientX - rect.left - dragOffset.current.x) / rect.width) * 100
-    const newY = ((touch.clientY - rect.top  - dragOffset.current.y) / rect.height) * 100
-    setSkills(prev => prev.map(s =>
-      s.name === dragging
-        ? { ...s, x: Math.max(0, Math.min(88, newX)), y: Math.max(0, Math.min(88, newY)) }
-        : s
-    ))
-  }, [dragging])
-
   return (
     <section id="skills" className="section-padding bg-terminal-bg">
       <div className="container-max md:pl-8">
@@ -144,40 +76,23 @@ const Skills = () => {
 
         {/* Cloud container */}
         <div
-          ref={containerRef}
-          className="relative w-full h-[480px] md:h-[520px] rounded-xl border border-terminal-border overflow-hidden select-none touch-none"
+          className="relative w-full h-[480px] md:h-[520px] rounded-xl border border-terminal-border overflow-hidden select-none"
           style={{ background: 'rgba(15, 20, 15, 0.85)' }}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleMouseUp}
         >
           {skills.map((skill) => {
-            const isDragging = dragging === skill.name
             const { fontSize, fontWeight } = sizeStyles[skill.size]
-
             return (
               <span
                 key={skill.name}
-                className={`
-                  absolute font-mono transition-colors duration-200
-                  ${isDragging
-                    ? 'text-terminal-green cursor-grabbing z-10'
-                    : 'text-gray-400 hover:text-terminal-green cursor-grab'}
-                `}
+                className="absolute font-mono text-gray-400 hover:text-terminal-green transition-colors duration-200"
                 style={{
                   left: `${skill.x}%`,
                   top: `${skill.y}%`,
                   fontSize,
                   fontWeight,
-                  animation: isDragging
-                    ? 'none'
-                    : `floatWord ${skill.dur}s ${skill.delay}s ease-in-out infinite`,
+                  animation: `floatWord ${skill.dur}s ${skill.delay}s ease-in-out infinite`,
                   willChange: 'transform',
                 }}
-                onMouseDown={(e) => handleMouseDown(e, skill.name)}
-                onTouchStart={(e) => handleTouchStart(e, skill.name)}
               >
                 {skill.name}
               </span>
@@ -187,8 +102,7 @@ const Skills = () => {
 
         {/* Footer hint */}
         <p className="mt-4 text-center font-mono text-xs text-terminal-muted">
-          <span className="text-terminal-green">●</span>
-          {' '}drag to rearrange · hover to highlight
+          <span className="text-terminal-green">●</span> hover to highlight
         </p>
 
       </div>
