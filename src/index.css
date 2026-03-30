@@ -44,3 +44,9 @@
     text-shadow: 0 0 10px rgba(0, 200, 83, 0.6);
   }
 }
+
+/* Floating word animation for skill cloud */
+@keyframes floatWord {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
