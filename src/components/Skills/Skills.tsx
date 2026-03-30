@@ -1,4 +1,4 @@
-type SkillSize = 'xl' | 'lg' | 'md' | 'sm'
+type SkillSize = 'xl' | 'md'
 
 interface SkillItem {
   name: string
@@ -10,49 +10,37 @@ interface SkillItem {
 }
 
 const sizeStyles: Record<SkillSize, { fontSize: string; fontWeight: number }> = {
-  xl: { fontSize: '2rem',    fontWeight: 700 },
-  lg: { fontSize: '1.5rem',  fontWeight: 600 },
-  md: { fontSize: '1.1rem',  fontWeight: 500 },
-  sm: { fontSize: '0.85rem', fontWeight: 400 },
+  xl: { fontSize: '1.9rem', fontWeight: 700 },
+  md: { fontSize: '1.0rem', fontWeight: 500 },
 }
 
-// 5 rows, ~14% vertical gap each — float animation (+/-10px) never causes overlap
-// x positions account for JetBrains Mono char widths: xl≈19px, lg≈14px, md≈11px, sm≈8px
+// 4 rows, ~22% vertical gap each (float-safe at +/-10px)
+// x positions based on JetBrains Mono char widths: xl≈18px/ch, md≈10px/ch
+// Slight y stagger (±1%) per row for organic look
 const skills: SkillItem[] = [
-  // ── Row 1  y≈6%  — 8 sm words ──
-  { name: 'C',                size: 'sm',  x: 4,   y: 6,   delay: 0.2,  dur: 3.8 },
-  { name: 'MATLAB',           size: 'sm',  x: 14,  y: 5,   delay: 1.4,  dur: 3.9 },
-  { name: 'R',                size: 'sm',  x: 25,  y: 7,   delay: 0.7,  dur: 3.6 },
-  { name: 'PowerBI',          size: 'sm',  x: 34,  y: 5,   delay: 1.6,  dur: 3.7 },
-  { name: 'Streamlit',        size: 'sm',  x: 46,  y: 8,   delay: 0.4,  dur: 4.0 },
-  { name: 'MS Excel',         size: 'sm',  x: 60,  y: 6,   delay: 1.9,  dur: 3.8 },
-  { name: 'Canva',            size: 'sm',  x: 73,  y: 7,   delay: 0.6,  dur: 3.6 },
-  { name: 'Robotics',         size: 'sm',  x: 84,  y: 5,   delay: 1.4,  dur: 3.7 },
+  // ── Row 1  y≈10%  — 4 medium words ──
+  { name: 'MATLAB',        size: 'md',  x: 14,  y: 11,  delay: 1.4,  dur: 3.9 },
+  { name: 'PowerBI',       size: 'md',  x: 33,  y: 9,   delay: 0.6,  dur: 4.0 },
+  { name: 'MS Excel',      size: 'md',  x: 54,  y: 11,  delay: 1.9,  dur: 3.8 },
+  { name: 'Streamlit',     size: 'md',  x: 76,  y: 9,   delay: 0.4,  dur: 4.1 },
 
-  // ── Row 2  y≈22%  — Github | Machine Learning (xl) | REST API ──
-  { name: 'Github',           size: 'md',  x: 7,   y: 22,  delay: 0.9,  dur: 4.2 },
-  { name: 'Machine Learning', size: 'xl',  x: 33,  y: 21,  delay: 0.4,  dur: 5.2 },
-  { name: 'REST API',         size: 'md',  x: 78,  y: 23,  delay: 1.1,  dur: 4.0 },
+  // ── Row 2  y≈32%  — 4 xl words ──
+  { name: 'C',             size: 'xl',  x: 12,  y: 33,  delay: 0.2,  dur: 4.6 },
+  { name: 'Python',        size: 'xl',  x: 27,  y: 31,  delay: 0.0,  dur: 4.5 },
+  { name: 'Firebase',      size: 'xl',  x: 50,  y: 33,  delay: 0.3,  dur: 4.8 },
+  { name: 'Kotlin',        size: 'xl',  x: 76,  y: 31,  delay: 0.9,  dur: 4.7 },
 
-  // ── Row 3  y≈39%  — Firebase | Python (xl) | Flutter (lg) | Java (xl) ──
-  { name: 'Firebase',         size: 'md',  x: 5,   y: 39,  delay: 0.3,  dur: 4.3 },
-  { name: 'Python',           size: 'xl',  x: 25,  y: 38,  delay: 0.0,  dur: 4.5 },
-  { name: 'Flutter',          size: 'lg',  x: 54,  y: 40,  delay: 1.5,  dur: 4.9 },
-  { name: 'Java',             size: 'xl',  x: 74,  y: 38,  delay: 0.8,  dur: 5.0 },
+  // ── Row 3  y≈54%  — 4 xl words ──
+  { name: 'Flutter',       size: 'xl',  x: 5,   y: 55,  delay: 1.5,  dur: 4.9 },
+  { name: 'AI & ML',       size: 'xl',  x: 26,  y: 53,  delay: 0.4,  dur: 5.1 },
+  { name: 'Data Analysis', size: 'xl',  x: 47,  y: 55,  delay: 0.8,  dur: 5.0 },
+  { name: 'MySQL',         size: 'xl',  x: 79,  y: 53,  delay: 1.2,  dur: 4.6 },
 
-  // ── Row 4  y≈57%  — Deep Learning (lg) | Kotlin | Data Analysis (lg) | MySQL ──
-  { name: 'Deep Learning',    size: 'lg',  x: 5,   y: 57,  delay: 1.2,  dur: 4.8 },
-  { name: 'Kotlin',           size: 'md',  x: 36,  y: 56,  delay: 1.8,  dur: 4.4 },
-  { name: 'Data Analysis',    size: 'lg',  x: 52,  y: 58,  delay: 0.6,  dur: 4.7 },
-  { name: 'MySQL',            size: 'md',  x: 84,  y: 56,  delay: 0.5,  dur: 4.1 },
-
-  // ── Row 5  y≈74%  — Android Studio | Git | Dialogflow | SpaCy | Figma | Mathematica ──
-  { name: 'Android Studio',   size: 'md',  x: 5,   y: 74,  delay: 1.0,  dur: 4.6 },
-  { name: 'Git',              size: 'md',  x: 28,  y: 73,  delay: 1.3,  dur: 4.2 },
-  { name: 'Dialogflow',       size: 'sm',  x: 40,  y: 75,  delay: 0.8,  dur: 4.1 },
-  { name: 'SpaCy',            size: 'sm',  x: 56,  y: 74,  delay: 1.1,  dur: 3.9 },
-  { name: 'Figma',            size: 'sm',  x: 68,  y: 75,  delay: 1.7,  dur: 3.8 },
-  { name: 'Mathematica',      size: 'sm',  x: 80,  y: 73,  delay: 0.3,  dur: 4.0 },
+  // ── Row 4  y≈76%  — 4 medium words ──
+  { name: 'Canva',         size: 'md',  x: 14,  y: 77,  delay: 0.6,  dur: 3.7 },
+  { name: 'Dialogflow',    size: 'md',  x: 35,  y: 75,  delay: 1.1,  dur: 4.0 },
+  { name: 'Figma',         size: 'md',  x: 58,  y: 77,  delay: 1.7,  dur: 3.8 },
+  { name: 'Git',           size: 'md',  x: 78,  y: 75,  delay: 0.3,  dur: 3.9 },
 ]
 
 const WrenchIcon = () => (
@@ -88,7 +76,7 @@ const Skills = () => {
             return (
               <span
                 key={skill.name}
-                className="absolute font-mono text-gray-400 hover:text-terminal-green transition-colors duration-200"
+                className="absolute font-mono text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default"
                 style={{
                   left: `${skill.x}%`,
                   top: `${skill.y}%`,
