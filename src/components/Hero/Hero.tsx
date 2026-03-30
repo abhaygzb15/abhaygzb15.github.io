@@ -97,7 +97,7 @@ const Hero = () => {
               {/* Photo — place picture.png in public/ folder */}
               <div className="relative w-80 h-[420px] rounded-2xl overflow-hidden border border-terminal-green/30 shadow-terminal-lg">
                 <img
-                  src="/picture.png"
+                  src="/assets/picture.png"
                   alt="Abhay Pawar"
                   className="w-full h-full object-cover object-top"
                   onError={(e) => {
