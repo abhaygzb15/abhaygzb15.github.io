@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import SocialSidebar from './components/SocialSidebar/SocialSidebar'
 import Hero from './components/Hero/Hero'
@@ -7,8 +8,10 @@ import Internships from './components/Internships/Internships'
 import Achievements from './components/Achievements/Achievements'
 import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
+import Blogs from './pages/Blogs'
+import Publications from './pages/Publications'
 
-function App() {
+function Home() {
   return (
     <div className="min-h-screen bg-terminal-bg text-gray-100">
       <Navbar />
@@ -23,6 +26,16 @@ function App() {
       </main>
       <Footer />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/blogs" element={<Blogs />} />
+      <Route path="/publications" element={<Publications />} />
+    </Routes>
   )
 }
 
