@@ -32,17 +32,17 @@ const socialLinks = [
     label: 'GitHub',
   },
   {
-    href: '#', // TODO: Add LinkedIn URL
+    href: 'https://www.linkedin.com/in/abhaypawar15/',
     icon: <LinkedInIcon />,
     label: 'LinkedIn',
   },
   {
-    href: '#', // TODO: Add Medium URL
+    href: 'https://medium.com/@abhaygzb15',
     icon: <MediumIcon />,
     label: 'Medium',
   },
   {
-    href: '#', // TODO: Add Instagram URL
+    href: 'https://www.instagram.com/abhaypawar._/',
     icon: <InstagramIcon />,
     label: 'Instagram',
   },

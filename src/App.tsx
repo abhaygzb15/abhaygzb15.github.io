@@ -6,10 +6,12 @@ import Skills from './components/Skills/Skills'
 import Projects from './components/Projects/Projects'
 import Internships from './components/Internships/Internships'
 import Achievements from './components/Achievements/Achievements'
-import Contact from './components/Contact/Contact'
+import ContactSection from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
 import Blogs from './pages/Blogs'
 import Publications from './pages/Publications'
+import About from './pages/About'
+import Contact from './pages/Contact'
 
 function Home() {
   return (
@@ -22,7 +24,7 @@ function Home() {
         <Projects />
         <Internships />
         <Achievements />
-        <Contact />
+        <ContactSection />
       </main>
       <Footer />
     </div>
@@ -35,6 +37,8 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/publications" element={<Publications />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
     </Routes>
   )
 }

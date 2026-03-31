@@ -21,7 +21,7 @@ const publications: Publication[] = [
       'Design of an optimal planning framework for cryosurgical treatment of brain tumor using CNN segmentation of MRI images',
     journal: 'Cryobiology (Elsevier), Volume 123, 2026, Article 105619',
     journalShort: 'Cryobiology · Elsevier',
-    link: '#',
+    link: 'https://doi.org/10.1016/j.cryobiol.2026.105619',
     description:
       'Developed an integrated framework that combines deep learning based tumor segmentation from MRI images, algorithmic optimization of cryoprobe placement, and thermal simulations to analyze the freezing process during cryoablation. The goal is to improve tumor coverage while minimizing damage to surrounding healthy tissue.',
   },

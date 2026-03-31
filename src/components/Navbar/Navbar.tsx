@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 const hashLinks = [
-  { label: '/about',    href: '#about' },
+  { label: '/about',    href: '/about' },
   { label: '/skills',   href: '#skills' },
   { label: '/projects', href: '#projects' },
   {
