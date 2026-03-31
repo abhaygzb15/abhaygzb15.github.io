@@ -108,26 +108,7 @@ const Contact = () => {
           </form>
         )}
 
-        {/* ── Divider ── */}
-        <div className="mt-14 border-t border-terminal-border/40 pt-8 flex flex-wrap justify-center gap-6">
-          {[
-            { label: 'GitHub',    href: 'https://github.com/abhaygzb15' },
-            { label: 'LinkedIn',  href: 'https://linkedin.com/in/abhay-pawar/' },
-            { label: 'Medium',    href: 'https://medium.com/@abhaygzb15' },
-            { label: '+91 9810993024', href: 'tel:+919810993024' },
-          ].map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              target={href.startsWith('http') ? '_blank' : undefined}
-              rel="noopener noreferrer"
-              className="font-mono text-xs text-terminal-muted hover:text-terminal-green transition-colors duration-200"
-            >
-              {label}
-            </a>
-          ))}
-        </div>
-
+       
       </div>
     </section>
   )

@@ -34,7 +34,7 @@ const Hero = () => {
 
             {/* Role */}
             <p className="font-mono text-gray-300 text-lg md:text-xl">
-              B.Tech IT &amp; Math Innovation{' '}
+              B.Tech IT {' '}
               <span className="text-gray-400">@</span>{' '}
               <span className="text-gray-200 border-b border-dotted border-gray-500 pb-0.5">
                 University of Delhi
@@ -43,10 +43,10 @@ const Hero = () => {
 
             {/* Bio — 4 lines */}
             <div className="font-mono text-gray-400 text-sm leading-relaxed max-w-md space-y-1">
-              <p><span className="text-terminal-green">{'>'}</span> Cluster Innovation Centre · CGPA 9.64, 9.77, 9.45</p>
-              <p><span className="text-terminal-green">{'>'}</span> Published researcher · Cryobiology (Elsevier) · GATE CSE Qualified</p>
-              <p><span className="text-terminal-green">{'>'}</span> SIH Finalist × 2 · Tata InnoVent Top 31 / 2822 Teams</p>
-              <p><span className="text-terminal-green">{'>'}</span> Delhi, India · open to research &amp; dev opportunities</p>
+              <p><span className="text-terminal-green">{'>'}</span> Final Year Undergrad at Cluster Innovation Centre</p>
+              <p><span className="text-terminal-green">{'>'}</span> Based in New Delhi</p>
+              <p><span className="text-terminal-green">{'>'}</span> Open to dev oppurtunities in Mobile App, Data Analysis & AI</p>
+              <p><span className="text-terminal-green">{'>'}</span> Driven to build scalable software with growing startups and tech companies — creating impact at scale, in India and beyond.</p>
             </div>
 
             {/* CTA Buttons — row 1: Contact + Resume, row 2: Launch Terminal */}
