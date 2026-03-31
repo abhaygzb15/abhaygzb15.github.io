@@ -93,12 +93,38 @@ const categoryStyle: Record<Category, { accent: string; icon: string }> = {
   volunteer:    { accent: 'text-orange-400 border-orange-400/40',   icon: '🤝' },
 }
 
-const CARD_W = 300 // px
+const CARD_W    = 300  // px
+const INTERVAL  = 3000 // ms between auto-advances
 
 const Achievements = () => {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const cardRefs  = useRef<(HTMLDivElement | null)[]>([])
+  const scrollRef    = useRef<HTMLDivElement>(null)
+  const cardRefs     = useRef<(HTMLDivElement | null)[]>([])
   const [activeIdx, setActiveIdx] = useState(0)
+  const activeIdxRef = useRef(0)   // mirror for use inside interval
+  const isPaused     = useRef(false)
+  const timerRef     = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  // Keep ref in sync with state
+  useEffect(() => { activeIdxRef.current = activeIdx }, [activeIdx])
+
+  // Smooth-scroll to a card (centers it)
+  const scrollTo = useCallback((idx: number) => {
+    const card = cardRefs.current[idx]
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    }
+  }, [])
+
+  // Start auto-advance timer
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      if (!isPaused.current) {
+        const next = (activeIdxRef.current + 1) % achievements.length
+        scrollTo(next)
+      }
+    }, INTERVAL)
+  }, [scrollTo])
 
   // Detect which card is closest to the scroll-container center
   const handleScroll = useCallback(() => {
@@ -116,24 +142,17 @@ const Achievements = () => {
     setActiveIdx(closest)
   }, [])
 
-  // Smooth-scroll to a card (centers it)
-  const scrollTo = (idx: number) => {
-    const card = cardRefs.current[idx]
-    if (card) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-    }
-  }
-
-  // Start at middle card
+  // Start at first card, then kick off timer
   useEffect(() => {
-    const mid = Math.floor(achievements.length / 2)
-    const el = scrollRef.current
-    const card = cardRefs.current[mid]
+    const el   = scrollRef.current
+    const card = cardRefs.current[0]
     if (el && card) {
       el.scrollLeft = card.offsetLeft - el.clientWidth / 2 + card.offsetWidth / 2
-      setActiveIdx(mid)
+      setActiveIdx(0)
     }
-  }, [])
+    startTimer()
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+  }, [startTimer])
 
   return (
     <section id="achievements" className="py-20 bg-terminal-bg overflow-hidden">
@@ -161,6 +180,10 @@ const Achievements = () => {
           msOverflowStyle: 'none',
         }}
         onScroll={handleScroll}
+        onMouseEnter={() => { isPaused.current = true }}
+        onMouseLeave={() => { isPaused.current = false }}
+        onTouchStart={() => { isPaused.current = true }}
+        onTouchEnd={() => { setTimeout(() => { isPaused.current = false }, 1500) }}
       >
         {/* Left spacer so first card can center */}
         <div className="shrink-0" style={{ width: `calc(50vw - ${CARD_W / 2}px)` }} />
