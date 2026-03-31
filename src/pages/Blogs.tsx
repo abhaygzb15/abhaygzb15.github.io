@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer'
 
-type Tag = 'All' | 'Technical' | 'Research' | 'Guides'
+type Tag = 'All' | 'Technical' | 'Experience'
 
 interface BlogPost {
   slug: string
@@ -13,85 +13,59 @@ interface BlogPost {
   date: string
   readTime: string
   cover?: string   // path to cover image, e.g. /assets/blog/post1.png
+  link: string     // URL to the blog post
 }
 
 const posts: BlogPost[] = [
+
   {
-    slug: 'battery-ageing-digital-twin',
-    tag: 'Research',
-    title: 'Building a Digital Twin for Battery Ageing & Reuse Optimisation',
-    excerpt:
-      'How we modelled State-of-Health degradation curves and built a simulation layer to predict second-life usability — insights from Tata InnoVent.',
-    date: 'January 2026',
-    readTime: '7 min read',
-  },
-  {
-    slug: 'gate-cs-prep-strategy',
-    tag: 'Guides',
-    title: 'My GATE CS Preparation Strategy — Cleared in 2025 & 2026',
-    excerpt:
-      'A no-nonsense breakdown of the resources, schedule, and mental models that helped me crack GATE CSE twice, including lessons from the first attempt.',
+    slug: 'SIH',
+    tag: 'Experience',
+    title: 'How We Made It to the Smart India Hackathon Finals Twice',
+    excerpt: 'More than a hackathon — a journey of building, learning, traveling, and growing together as a team.',
     date: 'March 2026',
-    readTime: '5 min read',
-  },
-  {
-    slug: 'flutter-firebase-chatbot',
-    tag: 'Technical',
-    title: 'Integrating Dialogflow CX with a Flutter App using Firebase',
-    excerpt:
-      'Step-by-step walkthrough of wiring a Dialogflow CX agent to a Flutter frontend via Cloud Functions — auth, sessions, and rich responses included.',
-    date: 'September 2025',
     readTime: '9 min read',
+    cover: '/assets/result.jpeg',
+    link: 'https://medium.com/@abhaygzb15/how-we-made-it-to-the-smart-india-hackathon-finals-twice-d3648d68bce2',
   },
   {
-    slug: 'nlp-text-classification-spacy',
+    slug: 'Govtech',
+    tag: 'Experience',
+    title: 'What My First 60 Days in GovTech Taught Me',
+    excerpt: 'Two months in, everything changed. Everything outside my comfort zone had to be faced. Here\'s what the GovTech experience looked like:',
+    date: 'April 2026',
+    readTime: '5 min read',
+    cover: '/assets/govtech.jpeg', link: 'https://medium.com/@abhaygzb15/what-my-first-60-days-in-govtech-taught-me-dfa3c20ea7eb',
+  },
+  {
+    slug: 'Digilocker',
     tag: 'Technical',
-    title: 'Text Classification at Scale with spaCy and Custom Pipelines',
-    excerpt:
-      'Practical guide to training a spaCy text-cat model from scratch, evaluating with precision/recall, and deploying it as a REST microservice.',
-    date: 'June 2025',
-    readTime: '8 min read',
+    title: 'DigiLocker Integration Architecture: A Secure OAuth-Based System',
+    excerpt: 'What I found interesting while building this integration was how thoughtfully the overall architecture is designed between all the systems involved.',
+    date: 'April 2026',
+    readTime: '5 min read',
+    cover: '/assets/digilocker.jpg',
+    link: 'https://medium.com/@abhaygzb15/digilocker-integration-architecture-a-secure-oauth-based-system-2b844ba63ccc',
   },
-  {
-    slug: 'british-airways-data-science',
-    tag: 'Research',
-    title: 'What I Learned from the British Airways Data Science Simulation',
-    excerpt:
-      'Scraping customer reviews, running sentiment analysis, and building a predictive model for booking behaviour — end-to-end walkthrough.',
-    date: 'May 2024',
-    readTime: '6 min read',
-  },
-  {
-    slug: 'sih-lessons',
-    tag: 'Guides',
-    title: 'Making It to SIH Finals Two Years in a Row — What Changed',
-    excerpt:
-      'Honest reflection on team dynamics, problem statement selection, prototype depth, and presentation strategy across two Smart India Hackathon runs.',
-    date: 'December 2025',
-    readTime: '4 min read',
-  },
+
 ]
 
 // Colour palette per tag (used in both the filter pill and card badge)
 const tagColor: Record<Exclude<Tag, 'All'>, { pill: string; badge: string; cover: string }> = {
   Technical: {
-    pill:  'bg-cyan-50   text-cyan-700   border-cyan-200',
+    pill: 'bg-cyan-50   text-cyan-700   border-cyan-200',
     badge: 'bg-cyan-100  text-cyan-700',
     cover: 'from-cyan-100 to-cyan-200',
   },
-  Research: {
-    pill:  'bg-purple-50  text-purple-700 border-purple-200',
+  Experience: {
+    pill: 'bg-purple-50  text-purple-700 border-purple-200',
     badge: 'bg-purple-100 text-purple-700',
     cover: 'from-purple-100 to-purple-200',
   },
-  Guides: {
-    pill:  'bg-amber-50  text-amber-700  border-amber-200',
-    badge: 'bg-amber-100 text-amber-700',
-    cover: 'from-amber-100 to-amber-200',
-  },
+
 }
 
-const TAGS: Tag[] = ['All', 'Technical', 'Research', 'Guides']
+const TAGS: Tag[] = ['All', 'Technical', 'Experience']
 
 // Initials avatar for author
 const AUTHOR = { name: 'Abhay Pawar', initials: 'AP' }
@@ -121,11 +95,10 @@ export default function Blogs() {
             <button
               key={tag}
               onClick={() => setActive(tag)}
-              className={`font-mono text-xs px-4 py-1.5 rounded-full border transition-all duration-200 ${
-                active === tag
-                  ? 'bg-terminal-green text-terminal-bg border-terminal-green font-semibold'
-                  : 'text-terminal-muted border-terminal-border hover:border-terminal-green hover:text-terminal-green'
-              }`}
+              className={`font-mono text-xs px-4 py-1.5 rounded-full border transition-all duration-200 ${active === tag
+                ? 'bg-terminal-green text-terminal-bg border-terminal-green font-semibold'
+                : 'text-terminal-muted border-terminal-border hover:border-terminal-green hover:text-terminal-green'
+                }`}
             >
               {tag}
             </button>
@@ -144,6 +117,7 @@ export default function Blogs() {
             return (
               <article
                 key={post.slug}
+                onClick={() => window.open(post.link, '_blank')}
                 className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg
                            transition-shadow duration-300 flex flex-col cursor-pointer"
               >
