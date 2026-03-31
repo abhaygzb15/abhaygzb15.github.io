@@ -12,7 +12,7 @@ interface BlogPost {
   excerpt: string
   date: string
   readTime: string
-  cover?: string          // optional cover image path
+  cover?: string   // path to cover image, e.g. /assets/blog/post1.png
 }
 
 const posts: BlogPost[] = [
@@ -22,7 +22,7 @@ const posts: BlogPost[] = [
     title: 'Building a Digital Twin for Battery Ageing & Reuse Optimisation',
     excerpt:
       'How we modelled State-of-Health degradation curves and built a simulation layer to predict second-life usability — insights from Tata InnoVent.',
-    date: 'Jan 2026',
+    date: 'January 2026',
     readTime: '7 min read',
   },
   {
@@ -31,7 +31,7 @@ const posts: BlogPost[] = [
     title: 'My GATE CS Preparation Strategy — Cleared in 2025 & 2026',
     excerpt:
       'A no-nonsense breakdown of the resources, schedule, and mental models that helped me crack GATE CSE twice, including lessons from the first attempt.',
-    date: 'Mar 2026',
+    date: 'March 2026',
     readTime: '5 min read',
   },
   {
@@ -40,7 +40,7 @@ const posts: BlogPost[] = [
     title: 'Integrating Dialogflow CX with a Flutter App using Firebase',
     excerpt:
       'Step-by-step walkthrough of wiring a Dialogflow CX agent to a Flutter frontend via Cloud Functions — auth, sessions, and rich responses included.',
-    date: 'Sep 2025',
+    date: 'September 2025',
     readTime: '9 min read',
   },
   {
@@ -49,7 +49,7 @@ const posts: BlogPost[] = [
     title: 'Text Classification at Scale with spaCy and Custom Pipelines',
     excerpt:
       'Practical guide to training a spaCy text-cat model from scratch, evaluating with precision/recall, and deploying it as a REST microservice.',
-    date: 'Jun 2025',
+    date: 'June 2025',
     readTime: '8 min read',
   },
   {
@@ -67,44 +67,56 @@ const posts: BlogPost[] = [
     title: 'Making It to SIH Finals Two Years in a Row — What Changed',
     excerpt:
       'Honest reflection on team dynamics, problem statement selection, prototype depth, and presentation strategy across two Smart India Hackathon runs.',
-    date: 'Dec 2025',
+    date: 'December 2025',
     readTime: '4 min read',
   },
 ]
 
-const tagStyle: Record<Exclude<Tag, 'All'>, string> = {
-  Technical: 'text-cyan-400   border-cyan-400/30   bg-cyan-400/5',
-  Research:  'text-purple-400 border-purple-400/30 bg-purple-400/5',
-  Guides:    'text-yellow-400 border-yellow-400/30 bg-yellow-400/5',
+// Colour palette per tag (used in both the filter pill and card badge)
+const tagColor: Record<Exclude<Tag, 'All'>, { pill: string; badge: string; cover: string }> = {
+  Technical: {
+    pill:  'bg-cyan-50   text-cyan-700   border-cyan-200',
+    badge: 'bg-cyan-100  text-cyan-700',
+    cover: 'from-cyan-100 to-cyan-200',
+  },
+  Research: {
+    pill:  'bg-purple-50  text-purple-700 border-purple-200',
+    badge: 'bg-purple-100 text-purple-700',
+    cover: 'from-purple-100 to-purple-200',
+  },
+  Guides: {
+    pill:  'bg-amber-50  text-amber-700  border-amber-200',
+    badge: 'bg-amber-100 text-amber-700',
+    cover: 'from-amber-100 to-amber-200',
+  },
 }
 
 const TAGS: Tag[] = ['All', 'Technical', 'Research', 'Guides']
 
+// Initials avatar for author
+const AUTHOR = { name: 'Abhay Pawar', initials: 'AP' }
+
 export default function Blogs() {
   const [active, setActive] = useState<Tag>('All')
-
   const visible = active === 'All' ? posts : posts.filter((p) => p.tag === active)
 
   return (
     <div className="min-h-screen bg-terminal-bg text-gray-100">
       <Navbar />
 
-      <main className="pt-24 pb-20 px-6 md:px-12 lg:px-24 container-max mx-auto">
+      {/* ── Dark header band ── */}
+      <header className="pt-24 pb-12 px-6 md:px-12 lg:px-24 container-max mx-auto">
+        <p className="font-mono text-terminal-green text-sm mb-2">// writing</p>
+        <h1 className="font-mono font-bold text-4xl md:text-5xl text-gray-100 leading-tight">
+          Blog<span className="text-terminal-green">.</span>
+        </h1>
+        <p className="font-mono text-gray-400 mt-3 max-w-xl text-sm leading-relaxed">
+          Thoughts on engineering, research, competitive exams, and the occasional
+          lesson learned the hard way.
+        </p>
 
-        {/* ── Header ── */}
-        <div className="mb-12">
-          <p className="font-mono text-terminal-muted text-sm mb-2">// writing</p>
-          <h1 className="font-mono font-bold text-4xl md:text-5xl text-gray-100 leading-tight">
-            Blog<span className="text-terminal-green">.</span>
-          </h1>
-          <p className="font-mono text-gray-400 mt-3 max-w-xl text-sm leading-relaxed">
-            Thoughts on engineering, research, competitive exams, and the occasional
-            lesson learned the hard way.
-          </p>
-        </div>
-
-        {/* ── Filter tabs ── */}
-        <div className="flex gap-2 flex-wrap mb-10">
+        {/* Filter tabs */}
+        <div className="flex gap-2 flex-wrap mt-8">
           {TAGS.map((tag) => (
             <button
               key={tag}
@@ -122,68 +134,82 @@ export default function Blogs() {
             {visible.length} post{visible.length !== 1 ? 's' : ''}
           </span>
         </div>
+      </header>
 
-        {/* ── Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {visible.map((post, i) => (
-            <article
-              key={post.slug}
-              className="group relative bg-terminal-bg-card border border-terminal-border rounded-2xl overflow-hidden
-                         hover:border-terminal-green transition-all duration-300 hover:shadow-terminal
-                         flex flex-col"
-            >
-              {/* Top accent line */}
-              <div className="h-px w-full bg-gradient-to-r from-terminal-green/0 via-terminal-green/60 to-terminal-green/0
-                              opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* ── Posts list — white cards on dark bg ── */}
+      <main className="px-6 md:px-12 lg:px-24 pb-20 container-max mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {visible.map((post) => {
+            const colors = tagColor[post.tag]
+            return (
+              <article
+                key={post.slug}
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg
+                           transition-shadow duration-300 flex flex-col cursor-pointer"
+              >
+                {/* Cover image / placeholder */}
+                {post.cover ? (
+                  <img
+                    src={post.cover}
+                    alt={post.title}
+                    className="w-full h-52 object-cover"
+                  />
+                ) : (
+                  /* Gradient placeholder with a subtle pattern */
+                  <div
+                    className={`w-full h-52 bg-gradient-to-br ${colors.cover} flex items-center justify-center relative overflow-hidden`}
+                  >
+                    {/* decorative circles */}
+                    <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-white/30" />
+                    <div className="absolute -bottom-6 -left-6 w-28 h-28 rounded-full bg-white/20" />
+                    <span className="relative font-mono text-5xl font-bold text-white/40 select-none">
+                      {post.tag[0]}
+                    </span>
+                  </div>
+                )}
 
-              <div className="p-6 flex flex-col gap-4 flex-1">
-
-                {/* Tag + read time */}
-                <div className="flex items-center justify-between">
+                {/* Card body */}
+                <div className="p-6 flex flex-col gap-3 flex-1">
+                  {/* Tag badge */}
                   <span
-                    className={`font-mono text-[10px] font-semibold uppercase tracking-widest border px-2.5 py-0.5 rounded-full ${tagStyle[post.tag]}`}
+                    className={`self-start text-xs font-semibold px-2.5 py-0.5 rounded-full ${colors.badge}`}
                   >
                     {post.tag}
                   </span>
-                  <span className="font-mono text-terminal-muted text-[10px]">{post.readTime}</span>
-                </div>
 
-                {/* Title */}
-                <h2 className="font-mono font-bold text-base leading-snug text-gray-100
-                               group-hover:text-terminal-green transition-colors duration-200">
-                  {post.title}
-                </h2>
-
-                {/* Excerpt */}
-                <p className="font-mono text-gray-400 text-xs leading-relaxed line-clamp-3 flex-1">
-                  {post.excerpt}
-                </p>
-
-                {/* Footer: date + read more */}
-                <div className="flex items-center justify-between pt-2 border-t border-terminal-border/50">
-                  <span className="font-mono text-terminal-muted text-[10px] uppercase tracking-widest">
-                    {post.date}
-                  </span>
-                  <a
-                    href="#"
-                    className="font-mono text-xs text-terminal-green hover:text-terminal-green-glow
-                               flex items-center gap-1 transition-colors duration-200"
+                  {/* Title */}
+                  <h2
+                    className="text-gray-900 font-bold text-xl leading-snug
+                               group-hover:text-terminal-green-dim transition-colors duration-200"
                   >
-                    Read more
-                    <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
-                  </a>
-                </div>
-              </div>
+                    {post.title}
+                  </h2>
 
-              {/* Index number watermark */}
-              <span className="absolute bottom-4 right-5 font-mono text-5xl font-bold text-terminal-border/20 select-none pointer-events-none">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-            </article>
-          ))}
+                  {/* Excerpt */}
+                  <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 flex-1">
+                    {post.excerpt}
+                  </p>
+
+                  {/* Author row */}
+                  <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
+                    {/* Avatar */}
+                    <div className="w-8 h-8 rounded-full bg-terminal-green flex items-center justify-center shrink-0">
+                      <span className="font-mono text-xs font-bold text-terminal-bg">{AUTHOR.initials}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-gray-800 text-xs font-semibold">{AUTHOR.name}</span>
+                      <span className="text-gray-400 text-xs">
+                        {post.date} · {post.readTime}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            )
+          })}
         </div>
 
-        {/* ── Back link ── */}
+        {/* Back link */}
         <div className="mt-14 flex justify-center">
           <Link
             to="/"
