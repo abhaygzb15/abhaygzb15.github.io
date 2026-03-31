@@ -116,11 +116,13 @@ const Achievements = () => {
   // Keep ref in sync with state
   useEffect(() => { activeIdxRef.current = activeIdx }, [activeIdx])
 
-  // Smooth-scroll to a card (centers it)
+  // Smooth-scroll to a card (centers it inside the scroll container only)
   const scrollTo = useCallback((idx: number) => {
+    const el   = scrollRef.current
     const card = cardRefs.current[idx]
-    if (card) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    if (el && card) {
+      const target = card.offsetLeft - el.clientWidth / 2 + card.offsetWidth / 2
+      el.scrollTo({ left: target, behavior: 'smooth' })
     }
   }, [])
 
