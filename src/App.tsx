@@ -3,7 +3,7 @@ import SocialSidebar from './components/SocialSidebar/SocialSidebar'
 import Hero from './components/Hero/Hero'
 import Skills from './components/Skills/Skills'
 import Projects from './components/Projects/Projects'
-import Contact from './components/Contact/Contact'
+import Internships from './components/Internships/Internships'
 import Footer from './components/Footer/Footer'
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Hero />
         <Skills />
         <Projects />
-        <Contact />
+        <Internships />
       </main>
       <Footer />
     </div>
