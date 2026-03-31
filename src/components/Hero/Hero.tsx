@@ -34,21 +34,19 @@ const Hero = () => {
 
             {/* Role */}
             <p className="font-mono text-gray-300 text-lg md:text-xl">
-              {/* TODO: Update role & company */}
-              Software Engineer{' '}
+              B.Tech IT &amp; Math Innovation{' '}
               <span className="text-gray-400">@</span>{' '}
               <span className="text-gray-200 border-b border-dotted border-gray-500 pb-0.5">
-                Your Company
+                University of Delhi
               </span>
             </p>
 
-            {/* Bio — 4-5 lines */}
+            {/* Bio — 4 lines */}
             <div className="font-mono text-gray-400 text-sm leading-relaxed max-w-md space-y-1">
-              {/* TODO: Update with your own bio */}
-              <p>{'>'} passionate about building scalable systems</p>
-              <p>{'>'} obsessed with clean code & developer experience</p>
-              <p>{'>'} open source contributor &amp; lifelong learner</p>
-              <p>{'>'} coffee → code → repeat</p>
+              <p><span className="text-terminal-green">{'>'}</span> Cluster Innovation Centre · CGPA 9.64, 9.77, 9.45</p>
+              <p><span className="text-terminal-green">{'>'}</span> Published researcher · Cryobiology (Elsevier) · GATE CSE Qualified</p>
+              <p><span className="text-terminal-green">{'>'}</span> SIH Finalist × 2 · Tata InnoVent Top 31 / 2822 Teams</p>
+              <p><span className="text-terminal-green">{'>'}</span> Delhi, India · open to research &amp; dev opportunities</p>
             </div>
 
             {/* CTA Buttons — row 1: Contact + Resume, row 2: Launch Terminal */}
