@@ -6,7 +6,7 @@ type NavDropdown = { label: string; children: NavLeaf[] }
 type NavItem     = NavLeaf | NavDropdown
 
 const navItems: NavItem[] = [
-  { label: '/about',    path: '/about' },
+  { label: '/about',    path: '/' },
   { label: '/skills',   path: '/skills' },
   { label: '/projects', path: '/projects' },
   {

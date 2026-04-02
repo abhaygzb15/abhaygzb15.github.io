@@ -12,8 +12,6 @@ import Footer from './components/Footer/Footer'
 import Blogs from './pages/Blogs'
 import Publications from './pages/Publications'
 import Contact from './pages/Contact'
-import About from './pages/About'
-
 // Sections reachable by direct route e.g. /skills → Home + scroll to #skills
 const SECTION_ROUTES = ['skills', 'projects', 'internships', 'achievements', 'contact']
 
@@ -57,7 +55,6 @@ function App() {
         <Route key={s} path={`/${s}`} element={<Home />} />
       ))}
       {/* Dedicated pages */}
-      <Route path="/about"        element={<About />} />
       <Route path="/blogs"        element={<Blogs />} />
       <Route path="/publications" element={<Publications />} />
       <Route path="/contact" element={<Contact />} />
