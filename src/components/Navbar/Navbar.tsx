@@ -82,7 +82,11 @@ const Navbar = () => {
             if (!isDropdown(item)) {
               return (
                 <li key={item.label}>
-                  <Link to={item.path} className={linkClass(item.path)}>
+                  <Link
+                    to={item.path}
+                    className={linkClass(item.path)}
+                    onClick={() => item.path === '/' && window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -155,7 +159,7 @@ const Navbar = () => {
                 <li key={item.label}>
                   <Link
                     to={item.path}
-                    onClick={closeAll}
+                    onClick={() => { closeAll(); item.path === '/' && window.scrollTo({ top: 0, behavior: 'smooth' }) }}
                     className={linkClass(item.path)}
                   >
                     {item.label}
