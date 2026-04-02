@@ -1,18 +1,33 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 
-export type ThemeId = 'terminal' | 'modern' | 'cyberpunk'
+export type ThemeId = 'terminal' | 'aurora' | 'neo'
 
 export interface ThemeMeta {
   id: ThemeId
   name: string
   desc: string
-  preview: string   // accent hex for the swatch dot
+  preview: string
 }
 
 export const THEMES: ThemeMeta[] = [
-  { id: 'terminal',  name: 'Terminal',    desc: 'Retro hacker aesthetic',        preview: '#00c853' },
-  { id: 'modern',    name: 'Modern Dark', desc: 'Warm dark with orange accents', preview: '#f97316' },
-  { id: 'cyberpunk', name: 'Cyberpunk',   desc: 'Dark navy with cyan glow',      preview: '#06b6d4' },
+  {
+    id: 'terminal',
+    name: 'Terminal',
+    desc: 'Monospace · matrix rain · sharp edges',
+    preview: '#00c853',
+  },
+  {
+    id: 'aurora',
+    name: 'Aurora',
+    desc: 'Glassmorphism · blur cards · purple gradient',
+    preview: '#a855f7',
+  },
+  {
+    id: 'neo',
+    name: 'Neo',
+    desc: 'Neo-brutalist · bold · stark offset borders',
+    preview: '#f97316',
+  },
 ]
 
 interface ThemeContextType {
@@ -33,10 +48,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('portfolio-theme', t)
   }
 
-  // Apply on first render
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
-  }, [])  // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

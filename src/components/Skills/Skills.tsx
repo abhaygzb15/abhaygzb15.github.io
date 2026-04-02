@@ -76,7 +76,7 @@ const Skills = () => {
             return (
               <span
                 key={skill.name}
-                className="absolute font-mono text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default"
+                className="skill-word absolute font-mono text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default"
                 style={{
                   left: `${skill.x}%`,
                   top: `${skill.y}%`,
