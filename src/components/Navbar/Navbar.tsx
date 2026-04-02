@@ -1,33 +1,38 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-const hashLinks = [
-  { label: '/about',    href: '/about' },
-  { label: '/skills',   href: '#skills' },
-  { label: '/projects', href: '#projects' },
+type NavLeaf     = { label: string; path: string }
+type NavDropdown = { label: string; children: NavLeaf[] }
+type NavItem     = NavLeaf | NavDropdown
+
+const navItems: NavItem[] = [
+  { label: '/about',    path: '/about' },
+  { label: '/skills',   path: '/skills' },
+  { label: '/projects', path: '/projects' },
   {
     label: '/experience',
-    submenu: [
-      { label: 'Internships',  href: '#internships' },
-      { label: 'Achievements', href: '#achievements' },
+    children: [
+      { label: 'Internships',  path: '/internships' },
+      { label: 'Achievements', path: '/achievements' },
     ],
   },
   {
     label: '/writeups',
-    submenu: [
-      { label: 'Blogs',        href: '/blogs' },
-      { label: 'Publications', href: '/publications' },
+    children: [
+      { label: 'Blogs',        path: '/blogs' },
+      { label: 'Publications', path: '/publications' },
     ],
   },
 ]
 
+const isDropdown = (item: NavItem): item is NavDropdown => 'children' in item
+
 const Navbar = () => {
-  const [menuOpen,     setMenuOpen]     = useState(false)
-  const [scrolled,     setScrolled]     = useState(false)
-  const [hoverMenu,    setHoverMenu]    = useState<string | null>(null)
-  const [mobileOpen,   setMobileOpen]   = useState<string | null>(null)
+  const [menuOpen,   setMenuOpen]   = useState(false)
+  const [hoverMenu,  setHoverMenu]  = useState<string | null>(null)
+  const [mobileOpen, setMobileOpen] = useState<string | null>(null)
+  const [scrolled,   setScrolled]   = useState(false)
   const location = useLocation()
-  const isHome = location.pathname === '/'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -35,10 +40,20 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Close mobile menu on navigation
+  useEffect(() => {
+    setMenuOpen(false)
+    setMobileOpen(null)
+  }, [location.pathname])
+
   const closeAll = () => { setMenuOpen(false); setMobileOpen(null) }
 
-  // Determine if a submenu link is a route (/blogs) or a hash (#skills)
-  const isRoute = (href: string) => href.startsWith('/')
+  const isActive = (path: string) => location.pathname === path
+
+  const linkClass = (path?: string) =>
+    `font-mono text-sm transition-colors duration-200 ${
+      path && isActive(path) ? 'text-terminal-green' : 'text-gray-400 hover:text-terminal-green'
+    }`
 
   return (
     <nav
@@ -55,77 +70,67 @@ const Navbar = () => {
           to="/"
           className="flex items-center gap-1 font-mono text-terminal-green hover:text-terminal-green-glow transition-colors terminal-glow"
         >
-          <span className="text-terminal-green">{'>'}</span>
+          <span>{'>'}</span>
           <span className="text-terminal-muted">_</span>
           <span className="ml-1 text-sm font-medium tracking-wide">abhaypawar.me</span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* ── Desktop nav ── */}
         <ul className="hidden md:flex items-center gap-8">
-          {hashLinks.map(({ label, href, submenu }) => (
-            <li
-              key={label}
-              className="relative"
-              onMouseEnter={() => submenu && setHoverMenu(label)}
-              onMouseLeave={() => submenu && setHoverMenu(null)}
-            >
-              {!submenu ? (
-                isHome ? (
-                  <a
-                    href={href}
-                    className="font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors duration-200"
-                  >
-                    {label}
-                  </a>
-                ) : (
-                  <Link
-                    to={`/${href!.replace('#', '')}`}
-                    className="font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors duration-200"
-                  >
-                    {label}
+          {navItems.map((item) => {
+            // Simple link
+            if (!isDropdown(item)) {
+              return (
+                <li key={item.label}>
+                  <Link to={item.path} className={linkClass(item.path)}>
+                    {item.label}
                   </Link>
-                )
-              ) : (
-                <>
-                  <button className="font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default">
-                    {label}
-                  </button>
+                </li>
+              )
+            }
 
-                  {/* Hover dropdown */}
-                  <div
-                    className={`absolute top-full left-0 mt-0 w-44 bg-terminal-bg border border-terminal-border rounded shadow-lg transition-all duration-200 ${
-                      hoverMenu === label ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-                    }`}
-                  >
-                    {submenu.map((item) =>
-                      isRoute(item.href) ? (
-                        <Link
-                          key={item.href}
-                          to={item.href}
-                          onClick={closeAll}
-                          className="block px-4 py-2 text-sm font-mono text-gray-400 hover:text-terminal-green hover:bg-terminal-bg-card transition-colors first:rounded-t last:rounded-b"
-                        >
-                          {item.label}
-                        </Link>
-                      ) : (
-                        <a
-                          key={item.href}
-                          href={item.href}
-                          onClick={closeAll}
-                          className="block px-4 py-2 text-sm font-mono text-gray-400 hover:text-terminal-green hover:bg-terminal-bg-card transition-colors first:rounded-t last:rounded-b"
-                        >
-                          {item.label}
-                        </a>
-                      )
-                    )}
-                  </div>
-                </>
-              )}
-            </li>
-          ))}
+            // Dropdown
+            return (
+              <li
+                key={item.label}
+                className="relative"
+                onMouseEnter={() => setHoverMenu(item.label)}
+                onMouseLeave={() => setHoverMenu(null)}
+              >
+                <button className="font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default">
+                  {item.label}
+                </button>
+
+                <div
+                  className={`absolute top-full left-0 mt-0 w-44 bg-terminal-bg border border-terminal-border
+                               rounded shadow-lg transition-all duration-200 ${
+                                 hoverMenu === item.label
+                                   ? 'opacity-100 pointer-events-auto'
+                                   : 'opacity-0 pointer-events-none'
+                               }`}
+                >
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.path}
+                      to={child.path}
+                      onClick={closeAll}
+                      className={`block px-4 py-2 text-sm font-mono hover:bg-terminal-bg-card
+                                  transition-colors first:rounded-t last:rounded-b ${
+                                    isActive(child.path)
+                                      ? 'text-terminal-green'
+                                      : 'text-gray-400 hover:text-terminal-green'
+                                  }`}
+                    >
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              </li>
+            )
+          })}
         </ul>
 
-        {/* Mobile hamburger */}
+        {/* Hamburger */}
         <button
           className="md:hidden flex flex-col gap-1.5 p-2"
           onClick={() => setMenuOpen((p) => !p)}
@@ -137,74 +142,60 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile dropdown */}
+      {/* ── Mobile menu ── */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ${
-          menuOpen ? 'max-h-[28rem] border-b border-terminal-border' : 'max-h-0'
+          menuOpen ? 'max-h-[32rem] border-b border-terminal-border' : 'max-h-0'
         }`}
       >
         <ul className="flex flex-col px-6 py-4 gap-4 bg-terminal-bg">
-          {hashLinks.map(({ label, href, submenu }) => (
-            <div key={label}>
-              <div className="flex items-center justify-between">
-                {!submenu ? (
-                  isHome ? (
-                    <a
-                      href={href}
-                      onClick={closeAll}
-                      className="font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors flex-1"
-                    >
-                      {label}
-                    </a>
-                  ) : (
-                    <Link
-                      to="/"
-                      onClick={closeAll}
-                      className="font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors flex-1"
-                    >
-                      {label}
-                    </Link>
-                  )
-                ) : (
-                  <span className="font-mono text-sm text-gray-400 flex-1">{label}</span>
-                )}
-                {submenu && (
+          {navItems.map((item) => {
+            if (!isDropdown(item)) {
+              return (
+                <li key={item.label}>
+                  <Link
+                    to={item.path}
+                    onClick={closeAll}
+                    className={linkClass(item.path)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              )
+            }
+
+            return (
+              <li key={item.label}>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm text-gray-400">{item.label}</span>
                   <button
-                    onClick={() => setMobileOpen(mobileOpen === label ? null : label)}
+                    onClick={() => setMobileOpen(mobileOpen === item.label ? null : item.label)}
                     className="text-terminal-green text-lg ml-2"
                   >
-                    {mobileOpen === label ? '−' : '+'}
+                    {mobileOpen === item.label ? '−' : '+'}
                   </button>
-                )}
-              </div>
-
-              {submenu && mobileOpen === label && (
-                <div className="mt-2 ml-4 flex flex-col gap-2 border-l border-terminal-border pl-4">
-                  {submenu.map((item) =>
-                    isRoute(item.href) ? (
-                      <Link
-                        key={item.href}
-                        to={item.href}
-                        onClick={closeAll}
-                        className="font-mono text-xs text-gray-400 hover:text-terminal-green transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ) : (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                        onClick={closeAll}
-                        className="font-mono text-xs text-gray-400 hover:text-terminal-green transition-colors"
-                      >
-                        {item.label}
-                      </a>
-                    )
-                  )}
                 </div>
-              )}
-            </div>
-          ))}
+                {mobileOpen === item.label && (
+                  <div className="mt-2 ml-4 flex flex-col gap-2 border-l border-terminal-border pl-4">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.path}
+                        to={child.path}
+                        onClick={closeAll}
+                        className={`font-mono text-xs transition-colors ${
+                          isActive(child.path)
+                            ? 'text-terminal-green'
+                            : 'text-gray-400 hover:text-terminal-green'
+                        }`}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </li>
+            )
+          })}
         </ul>
       </div>
     </nav>
