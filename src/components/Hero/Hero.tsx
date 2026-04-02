@@ -65,7 +65,7 @@ const Hero = () => {
                 </a>
 
                 <a
-                  href="#" // TODO: Add your resume PDF link
+                  href="https://drive.google.com/file/d/10n5q_QsZAzEBDzCpIq7txbHCvXxe9eLV/view?usp=sharing" // TODO: Add your resume PDF link
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-4 py-2.5 border border-terminal-green text-terminal-green font-mono text-sm font-semibold rounded hover:bg-terminal-green/10 transition-all duration-200"
