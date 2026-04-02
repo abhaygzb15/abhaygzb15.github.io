@@ -11,7 +11,7 @@ import ContactSection from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
 import Blogs from './pages/Blogs'
 import Publications from './pages/Publications'
-import Contact from './pages/Contact'
+import Contact from './components/Contact/Contact'
 // Sections reachable by direct route e.g. /skills → Home + scroll to #skills
 const SECTION_ROUTES = ['skills', 'projects', 'internships', 'achievements', 'contact']
 

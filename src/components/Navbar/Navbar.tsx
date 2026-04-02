@@ -10,6 +10,7 @@ const navItems: NavItem[] = [
   { label: '/about',    path: '/' },
   { label: '/skills',   path: '/skills' },
   { label: '/projects', path: '/projects' },
+
   {
     label: '/experience',
     children: [
@@ -24,6 +25,8 @@ const navItems: NavItem[] = [
       { label: 'Publications', path: '/publications' },
     ],
   },
+    { label: '/contact',  path: '/contact' },
+
 ]
 
 const isDropdown = (item: NavItem): item is NavDropdown => 'children' in item
