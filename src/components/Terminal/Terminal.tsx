@@ -9,23 +9,24 @@ const BANNER: Line[] = [
   { type: 'banner', text: '╔══════════════════════════════╗' },
   { type: 'banner', text: '║  abhay@pawar ~ portfolio v1  ║' },
   { type: 'banner', text: '╚══════════════════════════════╝' },
-  { type: 'output', text: "Type 'help' for available commands." },
+  { type: 'output', text: "Type '/' or a command to begin." },
   { type: 'output', text: '' },
 ]
 
+const SLASH_OPTIONS: { cmd: string; desc: string }[] = [
+  { cmd: 'whoami',       desc: 'who am I?' },
+  { cmd: 'about',        desc: 'short intro' },
+  { cmd: 'education',    desc: 'academic background' },
+  { cmd: 'skills',       desc: 'tech stack & tools' },
+  { cmd: 'experience',   desc: 'internships & roles' },
+  { cmd: 'projects',     desc: 'notable projects' },
+  { cmd: 'publications', desc: 'research work' },
+  { cmd: 'contact',      desc: 'reach me' },
+  { cmd: 'clear',        desc: 'clear terminal' },
+]
+
 const COMMANDS: Record<string, string[]> = {
-  help: [
-    'Available commands:',
-    '  whoami       — who am I?',
-    '  about        — a short intro',
-    '  education    — academic background',
-    '  skills       — tech stack & tools',
-    '  experience   — internships & roles',
-    '  projects     — notable projects',
-    '  publications — research work',
-    '  contact      — reach me',
-    '  clear        — clear terminal',
-  ],
+  help: SLASH_OPTIONS.map((o) => `  /${o.cmd.padEnd(14)} — ${o.desc}`),
 
   whoami: [
     'Abhay Pawar',
@@ -96,23 +97,30 @@ const COMMANDS: Record<string, string[]> = {
 }
 
 const processCommand = (raw: string): Line[] => {
-  const cmd = raw.trim().toLowerCase()
+  const cmd = raw.trim().toLowerCase().replace(/^\//, '')
   if (!cmd) return []
   if (cmd === 'clear') return []
   const response = COMMANDS[cmd]
   if (response) return response.map((t) => ({ type: 'output' as const, text: t }))
-  return [{ type: 'error', text: `command not found: ${cmd}. Try 'help'.` }]
+  return [{ type: 'error', text: `command not found: ${cmd}. Type '/' for options.` }]
 }
 
 const Terminal = () => {
-  const [open, setOpen]       = useState(false)
-  const [lines, setLines]     = useState<Line[]>(BANNER)
-  const [input, setInput]     = useState('')
-  const [history, setHistory] = useState<string[]>([])
-  const [histIdx, setHistIdx] = useState(-1)
+  const [open, setOpen]         = useState(false)
+  const [lines, setLines]       = useState<Line[]>(BANNER)
+  const [input, setInput]       = useState('')
+  const [history, setHistory]   = useState<string[]>([])
+  const [histIdx, setHistIdx]   = useState(-1)
+  const [slashOpen, setSlashOpen] = useState(false)
+  const [highlighted, setHighlighted] = useState(0)
 
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef  = useRef<HTMLInputElement>(null)
+
+  // Filter slash options by what user typed after "/"
+  const slashFilter = input.startsWith('/')
+    ? SLASH_OPTIONS.filter((o) => o.cmd.startsWith(input.slice(1).toLowerCase()))
+    : SLASH_OPTIONS
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -122,38 +130,73 @@ const Terminal = () => {
     if (open) setTimeout(() => inputRef.current?.focus(), 50)
   }, [open])
 
-  const submit = () => {
-    const trimmed = input.trim()
-    const inputLine: Line = { type: 'input', text: `> ${trimmed}` }
+  // Show slash menu when input starts with "/"
+  useEffect(() => {
+    setSlashOpen(input.startsWith('/'))
+    setHighlighted(0)
+  }, [input])
 
-    if (trimmed.toLowerCase() === 'clear') {
+  const runCommand = (cmd: string) => {
+    setSlashOpen(false)
+
+    if (cmd.toLowerCase() === 'clear') {
       setLines([...BANNER])
       setInput('')
       setHistIdx(-1)
       return
     }
 
-    const output = processCommand(trimmed)
-    if (trimmed) setHistory((h) => [trimmed, ...h].slice(0, 50))
+    const inputLine: Line = { type: 'input', text: `> ${cmd}` }
+    const output = processCommand(cmd)
+    if (cmd) setHistory((h) => [cmd, ...h].slice(0, 50))
     setLines((prev) => [...prev, inputLine, ...output])
     setInput('')
     setHistIdx(-1)
   }
 
-  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') { submit(); return }
-    if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      const next = Math.min(histIdx + 1, history.length - 1)
-      setHistIdx(next)
-      setInput(history[next] ?? '')
+  const submit = () => {
+    if (slashOpen && slashFilter.length > 0) {
+      runCommand(slashFilter[highlighted].cmd)
+    } else {
+      runCommand(input.trim())
     }
-    if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      const next = histIdx - 1
-      if (next < 0) { setHistIdx(-1); setInput(''); return }
-      setHistIdx(next)
-      setInput(history[next] ?? '')
+  }
+
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (slashOpen && slashFilter.length > 0) {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        setHighlighted((p) => (p - 1 + slashFilter.length) % slashFilter.length)
+        return
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        setHighlighted((p) => (p + 1) % slashFilter.length)
+        return
+      }
+      if (e.key === 'Escape') {
+        setSlashOpen(false)
+        setInput('')
+        return
+      }
+    }
+
+    if (e.key === 'Enter') { submit(); return }
+
+    if (!slashOpen) {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        const next = Math.min(histIdx + 1, history.length - 1)
+        setHistIdx(next)
+        setInput(history[next] ?? '')
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        const next = histIdx - 1
+        if (next < 0) { setHistIdx(-1); setInput(''); return }
+        setHistIdx(next)
+        setInput(history[next] ?? '')
+      }
     }
   }
 
@@ -200,6 +243,28 @@ const Terminal = () => {
             <div ref={bottomRef} />
           </div>
 
+          {/* Slash command popup */}
+          {slashOpen && slashFilter.length > 0 && (
+            <div className="border-t border-terminal-border bg-terminal-bg-card">
+              {slashFilter.map((opt, i) => (
+                <button
+                  key={opt.cmd}
+                  onMouseDown={(e) => { e.preventDefault(); runCommand(opt.cmd) }}
+                  onMouseEnter={() => setHighlighted(i)}
+                  className={`w-full flex items-center gap-3 px-4 py-1.5 text-left font-mono text-xs transition-colors
+                    ${i === highlighted
+                      ? 'bg-terminal-border text-terminal-green'
+                      : 'text-gray-400 hover:text-terminal-green'
+                    }`}
+                >
+                  <span className="text-terminal-green opacity-60">/</span>
+                  <span className="w-24 shrink-0">{opt.cmd}</span>
+                  <span className="text-terminal-muted truncate">— {opt.desc}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Input bar */}
           <div className="flex items-center gap-2 px-4 py-2 border-t border-terminal-border bg-terminal-bg-card">
             <span className="font-mono text-terminal-green text-xs select-none">{'>'}</span>
@@ -208,7 +273,7 @@ const Terminal = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={onKeyDown}
-              placeholder="type a command…"
+              placeholder="type '/' for commands…"
               autoComplete="off"
               spellCheck={false}
               className="flex-1 bg-transparent font-mono text-xs text-gray-200 placeholder-terminal-muted outline-none caret-terminal-green"
