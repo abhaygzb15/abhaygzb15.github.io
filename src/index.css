@@ -2,47 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme variables ─────────────────────────────────────────────────── */
+
+/* Terminal (default) — dark green hacker */
+:root,
+[data-theme="terminal"] {
+  --accent:      #00c853;
+  --accent-dim:  #00843a;
+  --accent-glow: #00ff6a;
+  --bg:          #0a0d0a;
+  --bg-card:     #0f140f;
+  --border:      #1a2e1a;
+  --muted:       #4a7a4a;
+  --matrix-color: #00c853;
+}
+
+/* Modern Dark — warm dark with orange accent */
+[data-theme="modern"] {
+  --accent:      #f97316;
+  --accent-dim:  #ea580c;
+  --accent-glow: #fb923c;
+  --bg:          #110a00;
+  --bg-card:     #1c1200;
+  --border:      #2d1c00;
+  --muted:       #7c3d00;
+  --matrix-color: #f97316;
+}
+
+/* Cyberpunk — dark navy with cyan glow */
+[data-theme="cyberpunk"] {
+  --accent:      #06b6d4;
+  --accent-dim:  #0891b2;
+  --accent-glow: #22d3ee;
+  --bg:          #000c14;
+  --bg-card:     #001220;
+  --border:      #0a1f2e;
+  --muted:       #0e5068;
+  --matrix-color: #06b6d4;
+}
+
+/* ── Base ────────────────────────────────────────────────────────────── */
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-terminal-bg text-gray-100 font-mono antialiased;
+    background-color: var(--bg);
+    @apply text-gray-100 font-mono antialiased;
   }
 
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #0a0d0a;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #1a2e1a;
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #00843a;
-  }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track  { background: var(--bg); }
+  ::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
 }
 
+/* ── Utilities ───────────────────────────────────────────────────────── */
+
 @layer utilities {
-  .section-padding {
-    @apply px-6 py-20 md:px-12 lg:px-24;
-  }
-
-  .container-max {
-    @apply max-w-6xl mx-auto;
-  }
-
-  .terminal-text {
-    @apply text-terminal-green font-mono;
-  }
-
-  .terminal-glow {
-    text-shadow: 0 0 10px rgba(0, 200, 83, 0.6);
-  }
+  .section-padding { @apply px-6 py-20 md:px-12 lg:px-24; }
+  .container-max   { @apply max-w-6xl mx-auto; }
+  .terminal-text   { @apply text-terminal-green font-mono; }
+  .terminal-glow   { text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent); }
 }
 
 /* Floating word animation for skill cloud */
