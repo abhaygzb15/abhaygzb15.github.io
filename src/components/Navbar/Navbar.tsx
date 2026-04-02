@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useTheme, THEMES } from '../../contexts/ThemeContext'
 
 type NavLeaf     = { label: string; path: string }
 type NavDropdown = { label: string; children: NavLeaf[] }
@@ -10,7 +9,6 @@ const navItems: NavItem[] = [
   { label: '/about',    path: '/' },
   { label: '/skills',   path: '/skills' },
   { label: '/projects', path: '/projects' },
-
   {
     label: '/experience',
     children: [
@@ -25,32 +23,16 @@ const navItems: NavItem[] = [
       { label: 'Publications', path: '/publications' },
     ],
   },
-    { label: '/contact',  path: '/contact' },
-
 ]
 
 const isDropdown = (item: NavItem): item is NavDropdown => 'children' in item
 
 const Navbar = () => {
-  const [menuOpen,      setMenuOpen]      = useState(false)
-  const [hoverMenu,     setHoverMenu]     = useState<string | null>(null)
-  const [mobileOpen,    setMobileOpen]    = useState<string | null>(null)
-  const [scrolled,      setScrolled]      = useState(false)
-  const [themePicker,   setThemePicker]   = useState(false)
-  const themePickerRef                    = useRef<HTMLDivElement>(null)
+  const [menuOpen,   setMenuOpen]   = useState(false)
+  const [hoverMenu,  setHoverMenu]  = useState<string | null>(null)
+  const [mobileOpen, setMobileOpen] = useState<string | null>(null)
+  const [scrolled,   setScrolled]   = useState(false)
   const location = useLocation()
-  const { theme, setTheme } = useTheme()
-
-  // Close theme picker when clicking outside
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (themePickerRef.current && !themePickerRef.current.contains(e.target as Node)) {
-        setThemePicker(false)
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -151,72 +133,6 @@ const Navbar = () => {
             )
           })}
         </ul>
-
-        {/* ── Theme picker ── */}
-        <div ref={themePickerRef} className="hidden md:flex items-center gap-2 ml-4">
-
-          {/* Quick swatch dots */}
-          {THEMES.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTheme(t.id)}
-              title={t.name}
-              className="w-3.5 h-3.5 rounded-full border-2 transition-all duration-200"
-              style={{
-                backgroundColor: t.preview,
-                borderColor: theme === t.id ? '#ffffff' : 'transparent',
-                transform: theme === t.id ? 'scale(1.3)' : 'scale(1)',
-              }}
-            />
-          ))}
-
-          {/* Palette button opens full picker */}
-          <button
-            onClick={() => setThemePicker((p) => !p)}
-            title="Choose theme"
-            className={`ml-1 w-8 h-8 flex items-center justify-center border transition-all duration-200 ${
-              themePicker
-                ? 'border-terminal-green text-terminal-green bg-terminal-green/10'
-                : 'border-terminal-border text-terminal-muted hover:border-terminal-green hover:text-terminal-green'
-            }`}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4">
-              <path strokeLinecap="round" strokeLinejoin="round"
-                d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z" />
-            </svg>
-          </button>
-
-          {/* Full dropdown */}
-          {themePicker && (
-            <div className="absolute right-6 lg:right-24 top-14 w-64 bg-terminal-bg border border-terminal-border shadow-terminal z-50 overflow-hidden"
-              style={{ borderRadius: 'var(--radius-card)' }}>
-              <p className="keep-mono text-[10px] text-terminal-muted uppercase tracking-widest px-4 pt-3 pb-2">
-                Choose Theme
-              </p>
-              {THEMES.map((t) => (
-                <button
-                  key={t.id}
-                  onClick={() => { setTheme(t.id); setThemePicker(false) }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-150 ${
-                    theme === t.id
-                      ? 'bg-terminal-green/10 border-l-2 border-terminal-green'
-                      : 'hover:bg-terminal-bg-card border-l-2 border-transparent'
-                  }`}
-                >
-                  <span className="w-4 h-4 rounded-full shrink-0 border-2 border-white/20"
-                    style={{ backgroundColor: t.preview }} />
-                  <div className="min-w-0 flex-1">
-                    <p className={`text-sm font-semibold ${theme === t.id ? 'text-terminal-green' : 'text-gray-200'}`}>
-                      {t.name}
-                    </p>
-                    <p className="keep-mono text-[10px] text-terminal-muted leading-tight mt-0.5">{t.desc}</p>
-                  </div>
-                  {theme === t.id && <span className="ml-auto text-terminal-green text-xs">✓</span>}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
 
         {/* Hamburger */}
         <button

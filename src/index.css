@@ -2,275 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════════════════════════════════
-   THEME 1 — TERMINAL  (dark green, monospace, matrix rain, sharp edges)
-═══════════════════════════════════════════════════════════════════════ */
-:root,
-[data-theme="terminal"] {
-  --accent:      #00c853;
-  --accent-dim:  #00843a;
-  --accent-glow: #00ff6a;
-  --bg:          #0a0d0a;
-  --bg-card:     #0f140f;
-  --border:      #1a2e1a;
-  --muted:       #4a7a4a;
-  --matrix-color: #00c853;
-  --font-body:   'JetBrains Mono', monospace;
-  --font-heading:'JetBrains Mono', monospace;
-  --radius-card: 6px;
-  --radius-btn:  4px;
-  --card-shadow: 0 0 20px color-mix(in srgb, var(--accent) 12%, transparent);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   THEME 2 — AURORA  (glassmorphism, Inter font, purple, rounded blur)
-═══════════════════════════════════════════════════════════════════════ */
-[data-theme="aurora"] {
-  --accent:      #a855f7;
-  --accent-dim:  #7c3aed;
-  --accent-glow: #c084fc;
-  --bg:          #060412;
-  --bg-card:     #0d0820;
-  --border:      #2a1557;
-  --muted:       #6b21a8;
-  --matrix-color: #a855f7;
-  --font-body:   'Inter', system-ui, sans-serif;
-  --font-heading:'Inter', system-ui, sans-serif;
-  --radius-card: 20px;
-  --radius-btn:  50px;
-  --card-shadow: 0 8px 32px color-mix(in srgb, var(--accent) 14%, transparent);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   THEME 3 — NEO  (neo-brutalist, Inter/bold, orange, zero radius, offset shadows)
-═══════════════════════════════════════════════════════════════════════ */
-[data-theme="neo"] {
-  --accent:      #f97316;
-  --accent-dim:  #ea580c;
-  --accent-glow: #fb923c;
-  --bg:          #0d0d0d;
-  --bg-card:     #161616;
-  --border:      #f97316;
-  --muted:       #78350f;
-  --matrix-color: #f97316;
-  --font-body:   'Inter', system-ui, sans-serif;
-  --font-heading:'Inter', system-ui, sans-serif;
-  --radius-card: 0px;
-  --radius-btn:  0px;
-  --card-shadow: 4px 4px 0px var(--accent);
-}
-
-
-/* ══════════════════════════════════════════
-   BASE
-══════════════════════════════════════════ */
 @layer base {
-  html { scroll-behavior: smooth; }
-
-  body {
-    background-color: var(--bg);
-    color: #f3f4f6;
-    font-family: var(--font-body);
-    -webkit-font-smoothing: antialiased;
+  html {
+    scroll-behavior: smooth;
   }
 
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track  { background: var(--bg); }
-  ::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+  body {
+    @apply bg-terminal-bg text-gray-100 font-mono antialiased;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0d0a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1a2e1a;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00843a;
+  }
 }
 
-
-/* ══════════════════════════════════════════
-   GLOBAL FONT OVERRIDE
-   Aurora/Neo: switch font-mono → Inter for
-   all body/UI text (keep mono for code)
-══════════════════════════════════════════ */
-[data-theme="aurora"] .font-mono,
-[data-theme="neo"] .font-mono {
-  font-family: var(--font-body) !important;
-  letter-spacing: normal;
-}
-/* Preserve true monospace for code/terminal prompts */
-[data-theme="aurora"] .keep-mono,
-[data-theme="neo"] .keep-mono {
-  font-family: 'JetBrains Mono', monospace !important;
-  letter-spacing: 0.05em;
-}
-
-/* ══════════════════════════════════════════
-   BORDER RADIUS OVERRIDES
-══════════════════════════════════════════ */
-[data-theme="neo"] .rounded,
-[data-theme="neo"] .rounded-sm,
-[data-theme="neo"] .rounded-md,
-[data-theme="neo"] .rounded-lg,
-[data-theme="neo"] .rounded-xl,
-[data-theme="neo"] .rounded-2xl,
-[data-theme="neo"] .rounded-3xl,
-[data-theme="neo"] .rounded-full {
-  border-radius: 0 !important;
-}
-
-[data-theme="aurora"] .rounded-sm  { border-radius: 10px; }
-[data-theme="aurora"] .rounded-md  { border-radius: 12px; }
-[data-theme="aurora"] .rounded-lg  { border-radius: 16px; }
-[data-theme="aurora"] .rounded-xl  { border-radius: 20px; }
-[data-theme="aurora"] .rounded-2xl { border-radius: 24px; }
-
-
-/* ══════════════════════════════════════════
-   CARD OVERRIDES
-══════════════════════════════════════════ */
-
-/* Aurora: glassmorphism cards */
-[data-theme="aurora"] .bg-terminal-bg-card {
-  background: rgba(168, 85, 247, 0.05) !important;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
-[data-theme="aurora"] .border-terminal-border {
-  border-color: rgba(168, 85, 247, 0.18) !important;
-}
-[data-theme="aurora"] .shadow-terminal,
-[data-theme="aurora"] .hover\:shadow-terminal:hover {
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.25), inset 0 1px 0 rgba(255,255,255,0.06) !important;
-}
-
-/* Neo: thick solid accent border + offset shadow */
-[data-theme="neo"] .bg-terminal-bg-card {
-  background: var(--bg-card) !important;
-}
-[data-theme="neo"] .border-terminal-border {
-  border: 2px solid rgba(249, 115, 22, 0.3) !important;
-}
-[data-theme="neo"] .hover\:border-terminal-green:hover,
-[data-theme="neo"] .hover\:shadow-terminal:hover {
-  border-color: var(--accent) !important;
-  box-shadow: var(--card-shadow) !important;
-}
-[data-theme="neo"] .shadow-terminal {
-  box-shadow: var(--card-shadow) !important;
-}
-
-
-/* ══════════════════════════════════════════
-   BUTTON OVERRIDES
-══════════════════════════════════════════ */
-[data-theme="aurora"] .bg-terminal-green {
-  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%) !important;
-}
-[data-theme="aurora"] .hover\:bg-terminal-green-glow:hover {
-  background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%) !important;
-}
-
-[data-theme="neo"] .bg-terminal-green {
-  background: var(--accent) !important;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-
-/* ══════════════════════════════════════════
-   NAVBAR OVERRIDES
-══════════════════════════════════════════ */
-[data-theme="aurora"] nav {
-  background: rgba(6, 4, 18, 0.75) !important;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom-color: rgba(168, 85, 247, 0.2) !important;
-}
-[data-theme="neo"] nav {
-  border-bottom: 3px solid var(--accent) !important;
-  background: var(--bg) !important;
-}
-
-/* Aurora: pill underline for active nav link */
-[data-theme="aurora"] .text-terminal-green {
-  color: var(--accent) !important;
-}
-[data-theme="neo"] .text-terminal-green {
-  color: var(--accent) !important;
-}
-
-
-/* ══════════════════════════════════════════
-   SECTION BACKGROUNDS
-══════════════════════════════════════════ */
-[data-theme="aurora"] .bg-terminal-bg {
-  background-color: var(--bg) !important;
-}
-[data-theme="neo"] .bg-terminal-bg {
-  background-color: var(--bg) !important;
-}
-
-/* Aurora — sections alternate with subtle gradient wash */
-[data-theme="aurora"] section:nth-child(even) {
-  background: linear-gradient(180deg, rgba(168,85,247,0.03) 0%, transparent 100%) !important;
-}
-
-
-/* ══════════════════════════════════════════
-   HEADING OVERRIDES (Aurora/Neo)
-══════════════════════════════════════════ */
-[data-theme="neo"] h1,
-[data-theme="neo"] h2 {
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-[data-theme="aurora"] h1,
-[data-theme="aurora"] h2 {
-  font-weight: 700;
-  background: linear-gradient(135deg, #ffffff 0%, #c084fc 60%, #a855f7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  /* fallback for section labels */
-}
-/* Keep section labels (small headings) from getting gradient */
-[data-theme="aurora"] p.font-mono,
-[data-theme="aurora"] span.font-mono {
-  -webkit-text-fill-color: initial;
-}
-
-
-/* ══════════════════════════════════════════
-   SKILLS SECTION — word cloud
-   Aurora: glowing pills | Neo: stark blocks
-══════════════════════════════════════════ */
-[data-theme="aurora"] .skill-word {
-  color: var(--accent) !important;
-  text-shadow: 0 0 30px color-mix(in srgb, var(--accent) 40%, transparent) !important;
-  filter: drop-shadow(0 0 8px var(--accent));
-}
-[data-theme="neo"] .skill-word {
-  -webkit-text-stroke: 1px var(--accent);
-  color: transparent !important;
-  text-shadow: none !important;
-}
-[data-theme="neo"] .skill-word:hover {
-  color: var(--accent) !important;
-  -webkit-text-stroke: none;
-}
-
-
-/* ══════════════════════════════════════════
-   TERMINAL-GLOW utility
-══════════════════════════════════════════ */
-.terminal-glow {
-  text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
-}
-
-/* ══════════════════════════════════════════
-   UTILITIES
-══════════════════════════════════════════ */
 @layer utilities {
-  .section-padding { @apply px-6 py-20 md:px-12 lg:px-24; }
-  .container-max   { @apply max-w-6xl mx-auto; }
-  .terminal-text   { @apply text-terminal-green font-mono; }
+  .section-padding {
+    @apply px-6 py-20 md:px-12 lg:px-24;
+  }
+
+  .container-max {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .terminal-text {
+    @apply text-terminal-green font-mono;
+  }
+
+  .terminal-glow {
+    text-shadow: 0 0 10px rgba(0, 200, 83, 0.6);
+  }
 }
 
 /* Floating word animation for skill cloud */

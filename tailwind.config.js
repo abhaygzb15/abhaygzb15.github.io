@@ -13,20 +13,19 @@ export default {
       },
       colors: {
         terminal: {
-          // CSS variables — switching data-theme on <html> changes every color instantly
-          green:        'var(--accent)',
-          'green-dim':  'var(--accent-dim)',
-          'green-glow': 'var(--accent-glow)',
-          bg:           'var(--bg)',
-          'bg-card':    'var(--bg-card)',
-          border:       'var(--border)',
-          muted:        'var(--muted)',
+          green:     '#00c853',
+          'green-dim': '#00843a',
+          'green-glow': '#00ff6a',
+          bg:        '#0a0d0a',
+          'bg-card': '#0f140f',
+          border:    '#1a2e1a',
+          muted:     '#4a7a4a',
         },
       },
       animation: {
-        'fade-in':    'fadeIn 0.6s ease-out',
-        'slide-up':   'slideUp 0.6s ease-out',
-        'blink':      'blink 1s step-end infinite',
+        'fade-in':  'fadeIn 0.6s ease-out',
+        'slide-up': 'slideUp 0.6s ease-out',
+        'blink':    'blink 1s step-end infinite',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
       },
       keyframes: {
@@ -43,13 +42,13 @@ export default {
           '50%':      { opacity: '0' },
         },
         glowPulse: {
-          '0%, 100%': { textShadow: '0 0 8px var(--accent)' },
-          '50%':      { textShadow: '0 0 20px var(--accent), 0 0 40px var(--accent)' },
+          '0%, 100%': { textShadow: '0 0 8px #00c853' },
+          '50%':      { textShadow: '0 0 20px #00c853, 0 0 40px #00c853' },
         },
       },
       boxShadow: {
-        'terminal':    '0 0 20px color-mix(in srgb, var(--accent) 15%, transparent)',
-        'terminal-lg': '0 0 40px color-mix(in srgb, var(--accent) 20%, transparent)',
+        'terminal': '0 0 20px rgba(0, 200, 83, 0.15)',
+        'terminal-lg': '0 0 40px rgba(0, 200, 83, 0.2)',
       },
     },
   },
