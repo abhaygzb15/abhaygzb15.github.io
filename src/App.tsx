@@ -12,6 +12,7 @@ import Footer from './components/Footer/Footer'
 import Blogs from './pages/Blogs'
 import Publications from './pages/Publications'
 import Contact from './components/Contact/Contact'
+import Terminal from './components/Terminal/Terminal'
 // Sections reachable by direct route e.g. /skills → Home + scroll to #skills
 const SECTION_ROUTES = ['skills', 'projects', 'internships', 'achievements', 'contact']
 
@@ -42,6 +43,7 @@ function Home() {
         <ContactSection />
       </main>
       <Footer />
+      <Terminal />
     </div>
   )
 }
