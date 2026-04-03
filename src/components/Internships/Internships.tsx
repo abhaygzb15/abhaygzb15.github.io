@@ -95,7 +95,6 @@ const Internships = () => {
           >
             Professional Experience
           </h2>
-          <p className="font-mono text-terminal-muted text-sm mt-2">// work history</p>
         </div>
 
         {/* Experiences accordion — staggered entrance */}

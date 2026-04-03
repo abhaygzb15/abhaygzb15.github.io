@@ -28,7 +28,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
       <div className="relative z-10 w-full section-padding pt-20 md:pt-24 md:pl-20 lg:pl-28">
         <div className="container-max flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* ── Photo: top on mobile, right column on desktop ── */}
-          <div className="flex justify-center items-center animate-fade-in order-first lg:order-last">
+          <div className="flex justify-center items-center order-first lg:order-last">
             <div className="relative group">
               <div className="absolute -inset-1 rounded-2xl bg-terminal-green/20 blur-md group-hover:bg-terminal-green/35 transition-all duration-500" />
               <div className="relative w-36 h-44 sm:w-52 sm:h-64 lg:w-80 lg:h-[420px] rounded-2xl overflow-hidden border border-terminal-green/30 shadow-terminal-lg">
@@ -52,7 +52,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
           </div>
 
           {/* ── Left: Text ── */}
-          <div className="space-y-6 animate-fade-in order-last lg:order-first">
+          <div className="space-y-6 order-last lg:order-first">
             {/* Name */}
             <h1
               className="font-mono font-bold text-terminal-green leading-tight terminal-glow"

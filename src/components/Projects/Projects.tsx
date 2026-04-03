@@ -102,7 +102,7 @@ const Projects = () => {
 
         {/* Section title */}
         <div className="text-center mb-14">
-          <p className="font-mono text-terminal-muted text-sm mb-2 tracking-widest">// case_studies</p>
+          <p className="font-mono text-terminal-muted text-sm mb-2 tracking-widest">// projects</p>
           <h2
             className="font-mono font-bold text-terminal-green terminal-glow"
             style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}
@@ -120,15 +120,6 @@ const Projects = () => {
             >
               {/* ── Left: screenshot panel ── */}
               <div className="lg:w-[38%] p-5 border-b lg:border-b-0 lg:border-r border-terminal-border/50 flex flex-col justify-between gap-4">
-                {/* Status badge */}
-                <p className="font-mono text-xs">
-                  <span className="text-gray-500">PROJECT LOG </span>
-                  <span className="text-gray-400">STATUS: </span>
-                  <span className={`font-semibold ${statusColor[project.status]}`}>
-                    {project.status}
-                  </span>
-                </p>
-
                 <img
                   src={project.image}
                   alt={project.title}
@@ -136,19 +127,19 @@ const Projects = () => {
                 />
               </div>
 
-              {/* ── Right: case study content ── */}
+              {/* ── Right: project content ── */}
               <div className="lg:w-[62%] p-6 flex flex-col justify-center gap-5">
 
                 {/* Title */}
                 <h3 className="font-mono font-bold text-terminal-green text-xl md:text-2xl">
-                  Case Study:{' '}
+                  Project:{' '}
                   <span className="text-gray-100">{project.title}</span>
                 </h3>
 
-                {/* Abstract */}
+                {/* Description */}
                 <div className="border-l-2 border-terminal-green pl-4">
                   <p className="font-mono text-gray-300 text-sm leading-relaxed">
-                    <span className="text-terminal-green">{'>'}</span> Abstract:{' '}
+                    <span className="text-terminal-green">{'>'}</span>{' '}
                     {project.description}
                   </p>
                 </div>
