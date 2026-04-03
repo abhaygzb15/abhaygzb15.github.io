@@ -99,6 +99,7 @@ const Navbar = () => {
             }
 
             // Dropdown
+            const childActive = item.children.some((c) => isActive(c.path))
             return (
               <li
                 key={item.label}
@@ -106,9 +107,13 @@ const Navbar = () => {
                 onMouseEnter={() => setHoverMenu(item.label)}
                 onMouseLeave={() => setHoverMenu(null)}
               >
-                <button className="relative font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default group">
+                <button className={`relative font-mono text-sm transition-colors duration-200 cursor-default group
+                  ${childActive ? 'text-terminal-green' : 'text-gray-400 hover:text-terminal-green'}`}>
                   {item.label}
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-terminal-green group-hover:w-full transition-all duration-300" />
+                  <span
+                    className="absolute -bottom-0.5 left-0 h-px bg-terminal-green transition-all duration-300 group-hover:w-full"
+                    style={{ width: childActive ? '100%' : '0' }}
+                  />
                 </button>
 
                 <div
