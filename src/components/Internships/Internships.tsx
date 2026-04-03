@@ -88,93 +88,97 @@ const Internships = () => {
 
       <div className="relative z-10 container-max">
         {/* Section title */}
-        <div className="text-center mb-16">
+        <div className="reveal text-center mb-12">
           <h2
             className="font-bold text-white"
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)' }}
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}
           >
             Professional Experience
           </h2>
+          <p className="font-mono text-terminal-muted text-sm mt-2">// work history</p>
         </div>
 
-        {/* Experiences accordion */}
-        <div className="max-w-4xl mx-auto space-y-4">
+        {/* Experiences accordion — staggered entrance */}
+        <div className="stagger-children max-w-4xl mx-auto space-y-3">
           {experiences.map((experience) => (
-            <div key={experience.id} className="overflow-hidden rounded-lg">
-              {/* Header - Always visible */}
+            <div key={experience.id} className="overflow-hidden rounded-lg border border-terminal-border">
+              {/* Header */}
               <button
                 onClick={() => setExpandedId(expandedId === experience.id ? null : experience.id)}
-                className="w-full px-8 py-5 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 flex items-center justify-between group"
+                className={`w-full px-6 py-4 flex items-center justify-between group transition-all duration-300
+                  ${expandedId === experience.id
+                    ? 'bg-terminal-green/15 border-b border-terminal-green/30'
+                    : 'bg-terminal-bg-card hover:bg-terminal-green/10'
+                  }`}
               >
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-white text-lg">
-                    {experience.role} @ {experience.company}
+                  <h3 className="font-bold text-white text-base">
+                    {experience.role}
+                    <span className="text-terminal-muted font-normal mx-2">@</span>
+                    <span className="text-terminal-green">{experience.company}</span>
                   </h3>
                 </div>
-                <div className="flex items-center gap-8">
-                  <span className="font-semibold text-white">{experience.duration}</span>
-                  <span className="text-2xl text-white group-hover:scale-125 transition-transform duration-300">
-                    {expandedId === experience.id ? '−' : '+'}
+                <div className="flex items-center gap-6 shrink-0 ml-4">
+                  <span className="font-mono text-sm text-gray-400 hidden sm:block">{experience.duration}</span>
+                  <span
+                    className={`font-mono text-terminal-green text-xl transition-transform duration-300 ${
+                      expandedId === experience.id ? 'rotate-45' : ''
+                    }`}
+                  >
+                    +
                   </span>
                 </div>
               </button>
 
-              {/* Content - Expandable */}
-              {expandedId === experience.id && (
-                <div className="bg-gray-900/50 border-l-4 border-purple-600 px-8 py-8 animate-in fade-in duration-200">
-                  <div className="flex flex-col lg:flex-row gap-8">
-                    {/* Left content */}
+              {/* Expandable content */}
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  expandedId === experience.id ? 'max-h-[600px]' : 'max-h-0'
+                }`}
+              >
+                <div className="bg-terminal-bg border-l-2 border-terminal-green px-6 py-6">
+                  <div className="flex flex-col lg:flex-row gap-6">
                     <div className="flex-1">
-                      {/* Location and view button */}
-                      <div className="flex flex-col gap-4 mb-6">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3 text-gray-300">
-                            <span className="text-purple-400">📍</span>
-                            <span className="font-mono text-sm">{experience.location}</span>
-                          </div>
-                          <a
-                            href={experience.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-mono text-sm rounded transition-colors"
-                          >
-                            <span>View</span>
-                            <span className="text-lg">→</span>
-                          </a>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+                        <div className="flex items-center gap-2 text-gray-400 font-mono text-sm">
+                          <span className="text-terminal-green">📍</span>
+                          {experience.location}
                         </div>
+                        <a
+                          href={experience.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-1.5
+                                     border border-terminal-green text-terminal-green font-mono text-sm rounded
+                                     hover:bg-terminal-green hover:text-terminal-bg transition-all duration-200 w-fit"
+                        >
+                          View →
+                        </a>
                       </div>
-
-                      {/* Description */}
-                      <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                      <p className="text-gray-300 text-sm leading-relaxed mb-5">
                         {experience.description}
                       </p>
-
-                      {/* Skills */}
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-2">
                         {experience.skills.map((skill) => (
                           <span
                             key={skill}
-                            className="px-4 py-2 bg-purple-900/50 border border-purple-600 text-purple-200 font-mono text-sm rounded-full hover:bg-purple-800/70 transition-colors"
+                            className="px-3 py-1 bg-terminal-green/10 border border-terminal-green/40
+                                       text-terminal-green font-mono text-xs rounded-full
+                                       hover:bg-terminal-green/20 transition-colors"
                           >
                             {skill}
                           </span>
                         ))}
                       </div>
                     </div>
-
-                    {/* Right image */}
-                    <div className="lg:w-64 flex-shrink-0">
-                      <div className="w-full aspect-square rounded-lg overflow-hidden border-2 border-purple-600 bg-gray-800">
-                        <img
-                          src={experience.image}
-                          alt={experience.company}
-                          className="w-full h-full object-cover"
-                        />
+                    <div className="lg:w-56 shrink-0">
+                      <div className="w-full aspect-square rounded-lg overflow-hidden border border-terminal-green/30 bg-terminal-bg-card">
+                        <img src={experience.image} alt={experience.company} className="w-full h-full object-cover" />
                       </div>
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>

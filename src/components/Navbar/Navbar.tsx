@@ -50,11 +50,6 @@ const Navbar = () => {
 
   const isActive = (path: string) => location.pathname === path
 
-  const linkClass = (path?: string) =>
-    `font-mono text-sm transition-colors duration-200 ${
-      path && isActive(path) ? 'text-terminal-green' : 'text-gray-400 hover:text-terminal-green'
-    }`
-
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -80,14 +75,20 @@ const Navbar = () => {
           {navItems.map((item) => {
             // Simple link
             if (!isDropdown(item)) {
+              const active = isActive(item.path)
               return (
                 <li key={item.label}>
                   <Link
                     to={item.path}
-                    className={linkClass(item.path)}
                     onClick={() => item.path === '/' && window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className={`relative font-mono text-sm transition-colors duration-200 group
+                      ${active ? 'text-terminal-green' : 'text-gray-400 hover:text-terminal-green'}`}
                   >
                     {item.label}
+                    <span
+                      className="absolute -bottom-0.5 left-0 h-px bg-terminal-green transition-all duration-300 group-hover:w-full"
+                      style={{ width: active ? '100%' : '0' }}
+                    />
                   </Link>
                 </li>
               )
@@ -101,8 +102,9 @@ const Navbar = () => {
                 onMouseEnter={() => setHoverMenu(item.label)}
                 onMouseLeave={() => setHoverMenu(null)}
               >
-                <button className="font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default">
+                <button className="relative font-mono text-sm text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default group">
                   {item.label}
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-terminal-green group-hover:w-full transition-all duration-300" />
                 </button>
 
                 <div
@@ -160,7 +162,7 @@ const Navbar = () => {
                   <Link
                     to={item.path}
                     onClick={() => { closeAll(); item.path === '/' && window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                    className={linkClass(item.path)}
+                    className={`font-mono text-sm transition-colors duration-200 ${isActive(item.path) ? 'text-terminal-green' : 'text-gray-400 hover:text-terminal-green'}`}
                   >
                     {item.label}
                   </Link>
