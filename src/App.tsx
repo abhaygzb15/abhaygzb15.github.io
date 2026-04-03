@@ -14,6 +14,13 @@ import Publications from "./pages/Publications";
 import Contact from "./components/Contact/Contact";
 import Terminal from "./components/Terminal/Terminal";
 
+// Scroll to top on every route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 const SECTION_ROUTES = [
   "skills",
   "projects",
@@ -68,6 +75,8 @@ function Home() {
 
 function App() {
   return (
+    <>
+    <ScrollToTop />
     <Routes>
       <Route path="/" element={<Home />} />
       {SECTION_ROUTES.map((s) => (
@@ -77,6 +86,7 @@ function App() {
       <Route path="/publications" element={<Publications />} />
       <Route path="/contact" element={<Contact />} />
     </Routes>
+    </>
   );
 }
 
