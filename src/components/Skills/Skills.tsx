@@ -66,9 +66,25 @@ const Skills = () => {
           </span>
         </div>
 
-        {/* Cloud container */}
+        {/* ── Mobile: pill grid ── */}
+        <div className="reveal md:hidden rounded-xl border border-terminal-border p-6"
+          style={{ background: 'rgba(15, 20, 15, 0.85)', transitionDelay: '100ms' }}>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {skills.map((skill) => (
+              <span
+                key={skill.name}
+                className="skill-word font-mono border border-terminal-green/40 rounded-full px-4 py-2"
+                style={{ fontSize: skill.size === 'xl' ? '1rem' : '0.8rem', fontWeight: skill.size === 'xl' ? 700 : 500 }}
+              >
+                {skill.name}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Desktop: floating word cloud ── */}
         <div
-          className="reveal relative w-full h-[480px] md:h-[520px] rounded-xl border border-terminal-border overflow-hidden select-none"
+          className="reveal hidden md:block relative w-full h-[520px] rounded-xl border border-terminal-border overflow-hidden select-none"
           style={{ background: 'rgba(15, 20, 15, 0.85)', transitionDelay: '100ms' }}
         >
           {skills.map((skill) => {

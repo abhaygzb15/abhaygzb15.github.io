@@ -26,9 +26,33 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
 
       {/* Offset content right on md+ to clear the sidebar */}
       <div className="relative z-10 w-full section-padding pt-24 md:pl-20 lg:pl-28">
-        <div className="container-max grid lg:grid-cols-2 gap-12 items-center">
+        <div className="container-max flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* ── Photo: top on mobile, right column on desktop ── */}
+          <div className="flex justify-center items-center animate-fade-in order-first lg:order-last">
+            <div className="relative group">
+              <div className="absolute -inset-1 rounded-2xl bg-terminal-green/20 blur-md group-hover:bg-terminal-green/35 transition-all duration-500" />
+              <div className="relative w-36 h-44 sm:w-52 sm:h-64 lg:w-80 lg:h-[420px] rounded-2xl overflow-hidden border border-terminal-green/30 shadow-terminal-lg">
+                <img
+                  src="/assets/picture.png"
+                  alt="Abhay Pawar"
+                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "none";
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.classList.add("bg-terminal-bg-card", "flex", "items-center", "justify-center");
+                      parent.innerHTML = `<span style="color:#00c853;font-size:1.5rem;font-family:monospace">[ AP ]</span>`;
+                    }
+                  }}
+                />
+                <div className="absolute inset-0 bg-terminal-green/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+
           {/* ── Left: Text ── */}
-          <div className="space-y-6 animate-fade-in">
+          <div className="space-y-6 animate-fade-in order-last lg:order-first">
             {/* Name */}
             <h1
               className="font-mono font-bold text-terminal-green leading-tight terminal-glow"
@@ -124,33 +148,6 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
             </div>
           </div>
 
-          {/* ── Right: Single photo ── */}
-          <div className="hidden lg:flex justify-center items-center animate-fade-in">
-            <div className="relative group">
-              {/* Glow ring — intensifies on hover */}
-              <div className="absolute -inset-1 rounded-2xl bg-terminal-green/20 blur-md group-hover:bg-terminal-green/35 transition-all duration-500" />
-
-              {/* Photo */}
-              <div className="relative w-80 h-[420px] rounded-2xl overflow-hidden border border-terminal-green/30 shadow-terminal-lg">
-                <img
-                  src="/assets/picture.png"
-                  alt="Abhay Pawar"
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    target.style.display = "none";
-                    const parent = target.parentElement;
-                    if (parent) {
-                      parent.classList.add("bg-terminal-bg-card", "flex", "flex-col", "items-center", "justify-center", "gap-2");
-                      parent.innerHTML = `<span style="color:#00c853;font-size:1.5rem;font-family:monospace">[ AP ]</span>`;
-                    }
-                  }}
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-terminal-green/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
