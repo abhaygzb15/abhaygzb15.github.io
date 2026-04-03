@@ -56,27 +56,27 @@ const Skills = () => {
       <div className="container-max md:pl-8">
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="reveal flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
             <WrenchIcon />
             <h2 className="font-mono font-bold text-gray-100 text-3xl">Skills</h2>
           </div>
           <span className="font-mono text-terminal-muted text-sm hidden sm:block">
-            // skill cloud
+            // hover to fill
           </span>
         </div>
 
         {/* Cloud container */}
         <div
-          className="relative w-full h-[480px] md:h-[520px] rounded-xl border border-terminal-border overflow-hidden select-none"
-          style={{ background: 'rgba(15, 20, 15, 0.85)' }}
+          className="reveal relative w-full h-[480px] md:h-[520px] rounded-xl border border-terminal-border overflow-hidden select-none"
+          style={{ background: 'rgba(15, 20, 15, 0.85)', transitionDelay: '100ms' }}
         >
           {skills.map((skill) => {
             const { fontSize, fontWeight } = sizeStyles[skill.size]
             return (
               <span
                 key={skill.name}
-                className="absolute font-mono text-gray-400 hover:text-terminal-green transition-colors duration-200 cursor-default"
+                className="absolute font-mono skill-word"
                 style={{
                   left: `${skill.x}%`,
                   top: `${skill.y}%`,

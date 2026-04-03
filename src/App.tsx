@@ -36,6 +36,18 @@ function Home() {
     return () => clearTimeout(id);
   }, [location.pathname]);
 
+  // Scroll-reveal observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+      { threshold: 0.1 }
+    );
+    const timer = setTimeout(() => {
+      document.querySelectorAll(".reveal, .stagger-children").forEach((el) => observer.observe(el));
+    }, 150);
+    return () => { clearTimeout(timer); observer.disconnect(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-terminal-bg text-gray-100">
       <Navbar />

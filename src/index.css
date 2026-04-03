@@ -28,9 +28,9 @@
 }
 
 @layer utilities {
-    .section-padding {
-        @apply px-6 py-20 md:px-12 lg:px-24;
-    }
+  .section-padding {
+    @apply px-6 py-14 md:px-12 lg:px-24;
+  }
 
     .container-max {
         @apply max-w-6xl mx-auto;
@@ -45,7 +45,7 @@
     }
 }
 
-/* Floating word animation for skill cloud */
+/* ── Floating word animation for skill cloud ── */
 @keyframes floatWord {
     0%,
     100% {
@@ -148,4 +148,43 @@
 .nav-link-anim:hover::before,
 .nav-link-anim:hover::after {
     width: 100%;
+}
+
+/* ── Skill outlined text: transparent with green stroke; fill on hover ── */
+.skill-word {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #00c853;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+  cursor: default;
+}
+.skill-word:hover {
+  color: #00c853;
+  text-shadow: 0 0 12px rgba(0, 200, 83, 0.4);
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Staggered card entrance ── */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 110ms; }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 220ms; }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 330ms; }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 440ms; }
+.stagger-children.visible > * {
+  opacity: 1;
+  transform: translateY(0);
 }

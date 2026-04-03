@@ -72,7 +72,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
               <div className="grid grid-cols-2 gap-3">
                 <a
                   href="#contact"
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-terminal-green text-terminal-bg font-mono text-sm font-semibold rounded hover:bg-terminal-green-glow transition-all duration-200 shadow-terminal"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-terminal-green text-terminal-bg font-mono text-sm font-semibold rounded hover:bg-terminal-green-glow hover:scale-105 transition-all duration-200 shadow-terminal"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -94,7 +94,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
                   href="#" // TODO: Add your resume PDF link
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 border border-terminal-green text-terminal-green font-mono text-sm font-semibold rounded hover:bg-terminal-green/10 transition-all duration-200"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 border border-terminal-green text-terminal-green font-mono text-sm font-semibold rounded hover:bg-terminal-green/10 hover:scale-105 transition-all duration-200"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -116,7 +116,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
               {/* Row 2 — Launch Terminal full width */}
               <button
                 onClick={onLaunchTerminal}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-terminal-border text-terminal-muted font-mono text-sm rounded hover:border-terminal-green hover:text-terminal-green transition-all duration-200"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-terminal-border text-terminal-muted font-mono text-sm rounded hover:border-terminal-green hover:text-terminal-green hover:scale-105 transition-all duration-200"
               >
                 <span className="text-terminal-green font-bold">{">"}_</span>
                 Launch Terminal
@@ -126,44 +126,29 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
 
           {/* ── Right: Single photo ── */}
           <div className="hidden lg:flex justify-center items-center animate-fade-in">
-            <div className="relative">
-              {/* Glow ring */}
-              <div className="absolute -inset-1 rounded-2xl bg-terminal-green/20 blur-md" />
+            <div className="relative group">
+              {/* Glow ring — intensifies on hover */}
+              <div className="absolute -inset-1 rounded-2xl bg-terminal-green/20 blur-md group-hover:bg-terminal-green/35 transition-all duration-500" />
 
-              {/* Photo — place picture.png in public/ folder */}
+              {/* Photo */}
               <div className="relative w-80 h-[420px] rounded-2xl overflow-hidden border border-terminal-green/30 shadow-terminal-lg">
                 <img
                   src="/assets/picture.png"
                   alt="Abhay Pawar"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
-                    // Show placeholder if image not found
                     const target = e.currentTarget;
                     target.style.display = "none";
                     const parent = target.parentElement;
                     if (parent) {
-                      parent.classList.add(
-                        "bg-terminal-bg-card",
-                        "flex",
-                        "flex-col",
-                        "items-center",
-                        "justify-center",
-                        "gap-2",
-                      );
-                      parent.innerHTML = `
-                        <span style="color:#00c853;font-size:1.5rem;font-family:monospace">[ AP ]</span>
-                        <span style="color:#4a7a4a;font-size:0.75rem;font-family:monospace">place picture.png in</span>
-                        <span style="color:#00c853;font-size:0.75rem;font-family:monospace">public/</span>
-                      `;
+                      parent.classList.add("bg-terminal-bg-card", "flex", "flex-col", "items-center", "justify-center", "gap-2");
+                      parent.innerHTML = `<span style="color:#00c853;font-size:1.5rem;font-family:monospace">[ AP ]</span>`;
                     }
                   }}
                 />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-terminal-green/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>
-
-              {/* Label */}
-              <p className="mt-3 text-center font-mono text-xs text-terminal-muted">
-                <span className="text-terminal-green">{">"}_</span> picture.png
-              </p>
             </div>
           </div>
         </div>
