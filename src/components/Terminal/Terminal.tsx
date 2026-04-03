@@ -142,6 +142,7 @@ const Terminal = ({ open, setOpen }: TerminalProps) => {
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const slashMenuRef = useRef<HTMLDivElement>(null);
 
   const slashFilter = input.startsWith("/")
     ? SLASH_OPTIONS.filter((o) =>
@@ -160,6 +161,15 @@ const Terminal = ({ open, setOpen }: TerminalProps) => {
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [open]);
+
+  // Scroll highlighted slash option into view whenever it changes
+  useEffect(() => {
+    if (!slashOpen || !slashMenuRef.current) return;
+    const item = slashMenuRef.current.querySelector(
+      `[data-idx="${highlighted}"]`,
+    ) as HTMLElement | null;
+    item?.scrollIntoView({ block: "nearest" });
+  }, [highlighted, slashOpen]);
 
   // Clear ALL state every time the terminal closes — fresh session every time
   useEffect(() => {
@@ -368,6 +378,7 @@ const Terminal = ({ open, setOpen }: TerminalProps) => {
         {/* ── Slash command menu ── */}
         {slashOpen && slashFilter.length > 0 && (
           <div
+            ref={slashMenuRef}
             className="shrink-0 overflow-y-auto"
             style={{
               borderTop: "1px solid #30363d",
@@ -394,6 +405,7 @@ const Terminal = ({ open, setOpen }: TerminalProps) => {
             {slashFilter.map((opt, i) => (
               <button
                 key={opt.cmd}
+                data-idx={i}
                 onMouseDown={(e) => {
                   e.preventDefault();
                   runCommand(opt.cmd);
