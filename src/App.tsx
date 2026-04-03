@@ -56,7 +56,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-terminal-bg text-gray-100">
+    <div className="min-h-screen bg-terminal-bg text-gray-100 pb-16 md:pb-0">
       <Navbar />
       <SocialSidebar />
       <main>

@@ -49,22 +49,41 @@ const socialLinks = [
 ]
 
 const SocialSidebar = () => (
-  <aside className="hidden md:flex fixed left-6 bottom-14 z-40 flex-col items-center gap-6">
-    {socialLinks.map(({ href, icon, label }) => (
-      <a
-        key={label}
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={label}
-        className="text-gray-500 hover:text-terminal-green transition-all duration-200
-                   hover:scale-125 hover:drop-shadow-[0_0_6px_rgba(0,200,83,0.7)]"
-      >
-        {icon}
-      </a>
-    ))}
-    <div className="w-px h-16 bg-terminal-border" />
-  </aside>
+  <>
+    {/* ── Desktop: vertical left sidebar ── */}
+    <aside className="hidden md:flex fixed left-6 bottom-14 z-40 flex-col items-center gap-6">
+      {socialLinks.map(({ href, icon, label }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          className="text-gray-500 hover:text-terminal-green transition-all duration-200
+                     hover:scale-125 hover:drop-shadow-[0_0_6px_rgba(0,200,83,0.7)]"
+        >
+          {icon}
+        </a>
+      ))}
+      <div className="w-px h-16 bg-terminal-border" />
+    </aside>
+
+    {/* ── Mobile: horizontal bar fixed at bottom ── */}
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-center gap-7 py-3 bg-terminal-bg/95 backdrop-blur border-t border-terminal-border">
+      {socialLinks.map(({ href, icon, label }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          className="text-gray-500 hover:text-terminal-green transition-all duration-200 hover:scale-125"
+        >
+          {icon}
+        </a>
+      ))}
+    </div>
+  </>
 )
 
 export default SocialSidebar

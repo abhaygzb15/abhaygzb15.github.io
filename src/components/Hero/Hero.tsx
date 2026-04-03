@@ -25,7 +25,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
       />
 
       {/* Offset content right on md+ to clear the sidebar */}
-      <div className="relative z-10 w-full section-padding pt-24 md:pl-20 lg:pl-28">
+      <div className="relative z-10 w-full section-padding pt-20 md:pt-24 md:pl-20 lg:pl-28">
         <div className="container-max flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* ── Photo: top on mobile, right column on desktop ── */}
           <div className="flex justify-center items-center animate-fade-in order-first lg:order-last">
