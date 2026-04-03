@@ -124,7 +124,7 @@ const Navbar = () => {
                       key={child.path}
                       to={child.path}
                       onClick={closeAll}
-                      className={`block px-4 py-2 text-sm font-mono nav-link-anim
+                      className={`block px-4 py-2 text-sm font-mono transition-colors duration-200
                                   first:rounded-t last:rounded-b ${
                                     isActive(child.path)
                                       ? "text-terminal-green"
