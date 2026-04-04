@@ -53,13 +53,20 @@ const Navbar = () => {
 
   // Scroll spy — only active on the home page (sections live there)
   useEffect(() => {
-    if (location.pathname !== '/' && !Object.keys(SECTION_PATH).map(k => SECTION_PATH[k]).includes(location.pathname)) return
+    if (location.pathname !== '/' && !Object.values(SECTION_PATH).includes(location.pathname)) return
     const ids = Object.keys(SECTION_PATH)
+    const visible = new Set<string>()
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id) })
+        entries.forEach(e => {
+          if (e.isIntersecting) visible.add(e.target.id)
+          else visible.delete(e.target.id)
+        })
+        // pick the first section (in document order) that is currently visible
+        const first = ids.find(id => visible.has(id))
+        if (first) setActiveSection(first)
       },
-      { threshold: 0.4 }
+      { rootMargin: '-20% 0px -20% 0px', threshold: 0 }
     )
     ids.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el) })
     return () => observer.disconnect()
