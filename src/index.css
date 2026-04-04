@@ -2,30 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme CSS variables ── */
+/* Default = dark. Light overrides set by html.light */
+
+:root {
+  /* Dark mode (default) */
+  --tc-green:      0 200 83;
+  --tc-green-dim:  0 132 58;
+  --tc-green-glow: 0 255 106;
+  --tc-bg:         10 13 10;
+  --tc-bg-card:    15 20 15;
+  --tc-border:     26 46 26;
+  --tc-muted:      74 122 74;
+}
+
+html.light {
+  /* Light mode */
+  --tc-green:      0 132 58;
+  --tc-green-dim:  0 90 39;
+  --tc-green-glow: 0 200 83;
+  --tc-bg:         244 249 244;
+  --tc-bg-card:    232 242 232;
+  --tc-border:     192 216 192;
+  --tc-muted:      74 107 74;
+}
+
 @layer base {
     html {
         scroll-behavior: smooth;
     }
 
     body {
-        @apply bg-terminal-bg text-gray-100 font-mono antialiased;
+        @apply bg-terminal-bg font-mono antialiased;
+        color: #e5e7e5;
+    }
+
+    html.light body {
+        color: #0f1a0f;
     }
 
     /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #0a0d0a;
-    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgb(var(--tc-bg)); }
     ::-webkit-scrollbar-thumb {
-        background: #1a2e1a;
+        background: rgb(var(--tc-border));
         border-radius: 3px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #00843a;
-    }
+    ::-webkit-scrollbar-thumb:hover { background: rgb(var(--tc-green-dim)); }
 }
+
+/* ── Light-mode overrides for Tailwind gray text classes ── */
+/* These have higher specificity than plain utility classes   */
+html.light .text-gray-100 { color: #0f1a0f !important; }
+html.light .text-gray-200 { color: #1a2d1a !important; }
+html.light .text-gray-300 { color: #2a4a2a !important; }
+html.light .text-gray-400 { color: #4a6a4a !important; }
+html.light .text-gray-500 { color: #5a7a5a !important; }
+
+/* Blog card text — already dark, keep as-is in light mode */
+html.light .text-gray-800 { color: #1a2d1a; }
+html.light .text-gray-900 { color: #0f1a0f; }
 
 @layer utilities {
   .section-padding {

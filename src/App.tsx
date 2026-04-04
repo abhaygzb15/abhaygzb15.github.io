@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { ThemeProvider } from "./context/ThemeContext";
 import PageLoader from "./components/Loader/PageLoader";
 import Navbar from "./components/Navbar/Navbar";
 import SocialSidebar from "./components/SocialSidebar/SocialSidebar";
@@ -76,6 +77,7 @@ function Home() {
 
 function App() {
   return (
+    <ThemeProvider>
     <>
     <PageLoader />
     <ScrollToTop />
@@ -89,6 +91,7 @@ function App() {
       <Route path="/contact" element={<Contact />} />
     </Routes>
     </>
+    </ThemeProvider>
   );
 }
 

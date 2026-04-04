@@ -12,20 +12,22 @@ export default {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       colors: {
+        // CSS-variable-backed colors — auto-switch between dark/light
+        // Variables hold space-separated RGB so opacity modifiers (bg-terminal-green/20) work
         terminal: {
-          green:     '#00c853',
-          'green-dim': '#00843a',
-          'green-glow': '#00ff6a',
-          bg:        '#0a0d0a',
-          'bg-card': '#0f140f',
-          border:    '#1a2e1a',
-          muted:     '#4a7a4a',
+          green:          'rgb(var(--tc-green)     / <alpha-value>)',
+          'green-dim':    'rgb(var(--tc-green-dim) / <alpha-value>)',
+          'green-glow':   'rgb(var(--tc-green-glow)/ <alpha-value>)',
+          bg:             'rgb(var(--tc-bg)        / <alpha-value>)',
+          'bg-card':      'rgb(var(--tc-bg-card)   / <alpha-value>)',
+          border:         'rgb(var(--tc-border)    / <alpha-value>)',
+          muted:          'rgb(var(--tc-muted)     / <alpha-value>)',
         },
       },
       animation: {
-        'fade-in':  'fadeIn 0.6s ease-out',
-        'slide-up': 'slideUp 0.6s ease-out',
-        'blink':    'blink 1s step-end infinite',
+        'fade-in':    'fadeIn 0.6s ease-out',
+        'slide-up':   'slideUp 0.6s ease-out',
+        'blink':      'blink 1s step-end infinite',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
       },
       keyframes: {
@@ -47,7 +49,7 @@ export default {
         },
       },
       boxShadow: {
-        'terminal': '0 0 20px rgba(0, 200, 83, 0.15)',
+        'terminal':    '0 0 20px rgba(0, 200, 83, 0.15)',
         'terminal-lg': '0 0 40px rgba(0, 200, 83, 0.2)',
       },
     },

@@ -50,8 +50,8 @@ const Skills = () => {
 
         {/* Icon cloud */}
         <div
-          className="reveal relative w-full h-[400px] md:h-[480px] rounded-xl border border-terminal-border overflow-hidden"
-          style={{ background: 'rgba(15, 20, 15, 0.85)', transitionDelay: '100ms' }}
+          className="reveal relative w-full h-[400px] md:h-[480px] rounded-xl border border-terminal-border overflow-hidden bg-terminal-bg-card"
+          style={{ transitionDelay: '100ms' }}
         >
           <IconCloud images={images} />
         </div>
