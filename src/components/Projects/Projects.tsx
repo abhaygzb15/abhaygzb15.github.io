@@ -74,9 +74,6 @@ const projects: Project[] = [
 ]
 
 // Status badge color
-const statusColor: Record<Project['status'], string> = {
-  'Completed': 'text-terminal-green',
-}
 
 const GithubIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
