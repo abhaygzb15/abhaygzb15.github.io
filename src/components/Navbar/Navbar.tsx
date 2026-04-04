@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AnimatedThemeToggler } from "../magicui/animated-theme-toggler";
+// import { AnimatedThemeToggler } from "../magicui/animated-theme-toggler";
 
 type NavLeaf = { label: string; path: string };
 type NavDropdown = { label: string; children: NavLeaf[] };
@@ -183,7 +183,7 @@ const Navbar = () => {
         </ul>
 
         {/* Theme toggle */}
-        <AnimatedThemeToggler />
+        {/* <AnimatedThemeToggler /> */}
 
         {/* Hamburger */}
         <button

@@ -11,7 +11,7 @@ const slugs = [
   'androidstudio',
   'mysql',
   'git',
-  'github',
+  'refinedgithub',
   'figma',
   'canva',
   'visualstudiocode',
@@ -20,8 +20,6 @@ const slugs = [
   'numpy',
   'pandas',
   'jupyter',
-  'react',
-  'typescript',
   'dialogflow',
   'powerbi',
 ]
