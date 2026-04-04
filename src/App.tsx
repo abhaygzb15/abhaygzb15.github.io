@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PageLoader from "./components/Loader/PageLoader";
 import Navbar from "./components/Navbar/Navbar";
 import SocialSidebar from "./components/SocialSidebar/SocialSidebar";
 import Hero from "./components/Hero/Hero";
@@ -76,6 +77,7 @@ function Home() {
 function App() {
   return (
     <>
+    <PageLoader />
     <ScrollToTop />
     <Routes>
       <Route path="/" element={<Home />} />
