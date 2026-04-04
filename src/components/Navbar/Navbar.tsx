@@ -27,11 +27,22 @@ const navItems: NavItem[] = [
 
 const isDropdown = (item: NavItem): item is NavDropdown => "children" in item;
 
+// Maps section id → the route path it corresponds to
+const SECTION_PATH: Record<string, string> = {
+  hero:         '/',
+  skills:       '/skills',
+  projects:     '/projects',
+  internships:  '/internships',
+  achievements: '/achievements',
+  contact:      '/contact',
+}
+
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [hoverMenu, setHoverMenu] = useState<string | null>(null);
-  const [mobileOpen, setMobileOpen] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen]       = useState(false);
+  const [hoverMenu, setHoverMenu]     = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen]   = useState<string | null>(null);
+  const [scrolled, setScrolled]       = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const location = useLocation();
 
   useEffect(() => {
@@ -40,18 +51,36 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Scroll spy — only active on the home page (sections live there)
+  useEffect(() => {
+    if (location.pathname !== '/' && !Object.keys(SECTION_PATH).map(k => SECTION_PATH[k]).includes(location.pathname)) return
+    const ids = Object.keys(SECTION_PATH)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id) })
+      },
+      { threshold: 0.4 }
+    )
+    ids.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el) })
+    return () => observer.disconnect()
+  }, [location.pathname])
+
   // Close mobile menu on navigation
   useEffect(() => {
     setMenuOpen(false);
     setMobileOpen(null);
   }, [location.pathname]);
 
-  const closeAll = () => {
-    setMenuOpen(false);
-    setMobileOpen(null);
-  };
+  const closeAll = () => { setMenuOpen(false); setMobileOpen(null); };
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    // On dedicated pages (/blogs, /publications) use pathname directly
+    if (location.pathname !== '/' && !Object.values(SECTION_PATH).includes(location.pathname))
+      return location.pathname === path
+    // On home / section routes use scroll spy if available, else pathname
+    const spyPath = SECTION_PATH[activeSection]
+    return (spyPath ?? location.pathname) === path
+  }
 
   return (
     <nav

@@ -95,11 +95,11 @@ const achievements: Achievement[] = [
   },
 ]
 
-const categoryStyle: Record<Category, { accent: string; icon: string }> = {
-  hackathon:    { accent: 'text-yellow-400 border-yellow-400/40',   icon: '🏆' },
-  exam:         { accent: 'text-cyan-400 border-cyan-400/40',       icon: '📋' },
-  certification:{ accent: 'text-purple-400 border-purple-400/40',   icon: '🎓' },
-  volunteer:    { accent: 'text-orange-400 border-orange-400/40',   icon: '🤝' },
+const categoryStyle: Record<Category, { accent: string }> = {
+  hackathon:    { accent: 'text-yellow-400 border-yellow-400/40' },
+  exam:         { accent: 'text-cyan-400 border-cyan-400/40' },
+  certification:{ accent: 'text-purple-400 border-purple-400/40' },
+  volunteer:    { accent: 'text-orange-400 border-orange-400/40' },
 }
 
 const CARD_W    = 300  // px
@@ -172,7 +172,6 @@ const Achievements = () => {
       <div className="container-max md:pl-8 px-6 md:px-12 lg:px-24 mb-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-xl">🏅</span>
             <h2 className="font-mono font-bold text-gray-100 text-3xl">Achievements</h2>
           </div>
           <span className="font-mono text-terminal-muted text-sm hidden sm:block">
@@ -200,7 +199,7 @@ const Achievements = () => {
         <div className="shrink-0" style={{ width: `calc(50vw - ${CARD_W / 2}px)` }} />
 
         {achievements.map((item, i) => {
-          const { accent, icon } = categoryStyle[item.category]
+          const { accent } = categoryStyle[item.category]
           const isActive = i === activeIdx
 
           return (
@@ -231,9 +230,8 @@ const Achievements = () => {
                     : 'border-terminal-border'}
                 `}
               >
-                {/* Top: icon + category badge */}
-                <div className="flex items-start justify-between">
-                  <span className="text-2xl">{icon}</span>
+                {/* Top: category badge */}
+                <div className="flex items-start justify-end">
                   <span className={`font-mono text-[10px] font-semibold uppercase tracking-widest border px-2 py-0.5 rounded-full ${accent}`}>
                     {item.label}
                   </span>

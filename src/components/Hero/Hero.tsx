@@ -1,5 +1,3 @@
-import MatrixRain from "./MatrixRain";
-
 // Place your photo as public/picture.png — it will be served at /picture.png
 
 interface HeroProps {
@@ -12,9 +10,6 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden bg-terminal-bg"
     >
-      {/* Matrix rain background */}
-      <MatrixRain />
-
       {/* Radial green glow */}
       <div
         className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full pointer-events-none"
