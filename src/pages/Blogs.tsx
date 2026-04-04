@@ -67,8 +67,6 @@ const tagColor: Record<Exclude<Tag, 'All'>, { pill: string; badge: string; cover
 
 const TAGS: Tag[] = ['All', 'Technical', 'Experience']
 
-// Initials avatar for author
-const AUTHOR = { name: 'Abhay Pawar', initials: 'AP' }
 
 export default function Blogs() {
   const [active, setActive] = useState<Tag>('All')
