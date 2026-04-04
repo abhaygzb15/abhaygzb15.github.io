@@ -21,7 +21,7 @@ const experiences: Experience[] = [
     location: 'Dwarka, New Delhi',
     link: 'https://www.linkedin.com/posts/bharat-digital-io-fellowship_full-stack-bfbf26-ugcPost-7424396353163833344-bgRI?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD68KCoBsMBV9Nwm6juOJWYF0RAFF_yIc1o',
     description:
-    'Selected in Build for Bharat Fellowship 2026 among the top 18 students out of 10,000+ applicants across India, currently working as an Android Developer on GovTech projects.',
+    'Selected in Build for Bharat Fellowship 2026 among the top 18 students out of 10,000+ applicants across India, currently working as an Android Developer on GovTech projects with National Highways Authority of India.',
     skills: ['Kotlin', 'Android', 'Rest API', 'React', 'Databases'],
     image: '/assets/I1.png',
   },
@@ -45,19 +45,19 @@ const experiences: Experience[] = [
     location: 'Hybrid',
     link: 'https://drive.google.com/file/d/10Z2hhOn6GtLLtwK6DMX9F-Z-dq9os8vi/view?usp=sharing&usp=embed_facebook',
     description:
-    'nterned at Chronicles Sporting Events, where I conducted research, developed the app from scratch, and worked on front-end design, backend development, and feature implementation.',
+    'Interned at Chronicles Sporting Events, where I conducted research, developed the app from scratch, and worked on front-end design, backend development, and feature implementation.',
     skills: ['Flutter', 'Firebase', 'REST API', 'Figma', 'SDLC'],
     image: '/assets/I3.jpeg',
   },
   {
     id: 4,
     role: 'Software Developer',
-    company: 'International Centre for Genetic Engineering and Biotechnology',
+    company: 'ICGEB Lab',
     duration: 'Nov 2024 - Feb 2025',
     location: 'Remote',
     link: 'https://drive.google.com/file/d/1O6voThOvQHS0hxBr-DPNhm30ZbcX8Lvg/view?usp=sharing&usp=embed_facebook',
     description:
-    'eveloped a real-time location mapping and routing mobile app from scratch, handling everything from UI/ UX to core features. Integrated live tracking, frontend and backend modules, and real-time updates.',
+    'At International Centre for Genetic Engineering and Biotechnology, I developed a real-time location mapping and routing mobile app from scratch, handling everything from UI/ UX to core features. Integrated live tracking, frontend and backend modules, and real-time updates.',
     skills: ['Flutter', 'Firebase', 'Google Maps', 'Figma'],
     image: '/assets/I4.jpg',
   },

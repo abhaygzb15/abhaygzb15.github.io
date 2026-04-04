@@ -17,7 +17,7 @@ const projects: Project[] = [
     'Developed a fantasy sports app for organizing and hosting MMA leagues with User, Promoter, and Admin profiles. Integrated challenge-based gameplay, detailed statistics, and infographics for an engaging experience',
     tech: ['Flutter', 'Firebase', 'Android', 'iOS', 'Figma'],
     github: 'private', // TODO: Add GitHub URL
-    demo: 'https://play.google.com/store/apps/details?id=com.challengers.mma&hl=en_US',   // TODO: Add live demo URL or remove this field
+    demo: 'https://drive.google.com/file/d/1DpGA5OKlfiKRw4lv6VtfD9J0DegTBSPa/view',   // TODO: Add live demo URL or remove this field
     image: '/assets/p1.png',
   },
   {
