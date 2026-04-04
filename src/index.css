@@ -2,31 +2,225 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * {
-    @apply scroll-smooth;
-  }
+/* ── Theme CSS variables ── */
+/* Default = dark. Light overrides set by html.light */
 
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply bg-white text-gray-900 font-sans antialiased;
-  }
-
-  /* Dark mode body */
-  .dark body {
-    @apply bg-gray-950 text-gray-100;
-  }
+:root {
+  /* Dark mode (default) */
+  --tc-green:      0 200 83;
+  --tc-green-dim:  0 132 58;
+  --tc-green-glow: 0 255 106;
+  --tc-bg:         10 13 10;
+  --tc-bg-card:    15 20 15;
+  --tc-border:     26 46 26;
+  --tc-muted:      74 122 74;
 }
+
+html.light {
+  /* Light mode */
+  --tc-green:      0 132 58;
+  --tc-green-dim:  0 90 39;
+  --tc-green-glow: 0 200 83;
+  --tc-bg:         244 249 244;
+  --tc-bg-card:    232 242 232;
+  --tc-border:     192 216 192;
+  --tc-muted:      74 107 74;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-terminal-bg font-mono antialiased;
+        color: #e5e7e5;
+    }
+
+    html.light body {
+        color: #0f1a0f;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgb(var(--tc-bg)); }
+    ::-webkit-scrollbar-thumb {
+        background: rgb(var(--tc-border));
+        border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: rgb(var(--tc-green-dim)); }
+}
+
+/* ── Light-mode overrides for Tailwind gray text classes ── */
+/* These have higher specificity than plain utility classes   */
+html.light .text-gray-100 { color: #0f1a0f !important; }
+html.light .text-gray-200 { color: #1a2d1a !important; }
+html.light .text-gray-300 { color: #2a4a2a !important; }
+html.light .text-gray-400 { color: #4a6a4a !important; }
+html.light .text-gray-500 { color: #5a7a5a !important; }
+
+/* Blog card text — already dark, keep as-is in light mode */
+html.light .text-gray-800 { color: #1a2d1a; }
+html.light .text-gray-900 { color: #0f1a0f; }
 
 @layer utilities {
   .section-padding {
-    @apply px-6 py-20 md:px-12 lg:px-24;
+    @apply px-6 py-14 md:px-12 lg:px-24;
   }
 
-  .container-max {
-    @apply max-w-6xl mx-auto;
-  }
+    .container-max {
+        @apply max-w-6xl mx-auto;
+    }
+
+    .terminal-text {
+        @apply text-terminal-green font-mono;
+    }
+
+    .terminal-glow {
+        text-shadow: 0 0 10px rgba(0, 200, 83, 0.6);
+    }
+}
+
+/* ── Floating word animation for skill cloud ── */
+@keyframes floatWord {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* ── Splash screen animations ── */
+@keyframes splashHandEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(36px) scale(0.88);
+    }
+    65% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes splashFingerTap {
+    0%,
+    18%,
+    100% {
+        transform: translateY(0px);
+    }
+    9% {
+        transform: translateY(14px);
+    }
+}
+
+@keyframes splashLoadingEnter {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.splash-hand-enter {
+    animation: splashHandEnter 0.68s cubic-bezier(0.34, 1.28, 0.64, 1) forwards;
+}
+
+.splash-finger-1 {
+    animation: splashFingerTap 1.8s ease-in-out 0s infinite;
+}
+.splash-finger-2 {
+    animation: splashFingerTap 1.6s ease-in-out 0.22s infinite;
+}
+.splash-finger-3 {
+    animation: splashFingerTap 1.8s ease-in-out 0.44s infinite;
+}
+.splash-finger-4 {
+    animation: splashFingerTap 1.6s ease-in-out 0.66s infinite;
+}
+
+.splash-loading-enter {
+    opacity: 0;
+    animation: splashLoadingEnter 0.5s ease-out 0.42s forwards;
+}
+
+/* ── Navbar item hover split-fill animation ── */
+.nav-link-anim {
+    text-decoration: none;
+    position: relative;
+    transition: all 0.5s;
+    z-index: 2;
+}
+
+.nav-link-anim::before,
+.nav-link-anim::after {
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 0;
+    background-color: #a6a6a6;
+    transition: all 0.5s;
+    z-index: -1;
+}
+
+.nav-link-anim::before {
+    right: 0;
+    top: 0;
+}
+
+.nav-link-anim::after {
+    left: 0;
+    bottom: 0;
+}
+
+.nav-link-anim:hover::before,
+.nav-link-anim:hover::after {
+    width: 100%;
+}
+
+/* ── Skill outlined text: transparent with green stroke; fill on hover ── */
+.skill-word {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #00c853;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+  cursor: default;
+}
+.skill-word:hover {
+  color: #00c853;
+  text-shadow: 0 0 12px rgba(0, 200, 83, 0.4);
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Staggered card entrance ── */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 110ms; }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 220ms; }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 330ms; }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 440ms; }
+.stagger-children.visible > * {
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -1,17 +1,23 @@
-// TODO: Implement Footer
-// - Copyright line
-// - Built-with credits (optional)
-// - Back-to-top link
-
 const Footer = () => {
   const year = new Date().getFullYear()
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
-    <footer className="py-8 text-center text-sm text-gray-400 border-t border-gray-100">
-      <p>
-        Designed &amp; Built by{' '}
-        <span className="text-gray-600 font-medium">Abhay Pawar</span> © {year}
-      </p>
+    <footer className="bg-terminal-bg border-t border-terminal-border py-6 px-6 md:px-12 lg:px-24">
+      <div className="container-max mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p className="font-mono text-terminal-muted text-xs">
+          © {year} Abhay Pawar — Designed &amp; Built by Abhay Pawar
+        </p>
+        <button
+          onClick={scrollToTop}
+          className="font-mono text-xs text-terminal-muted hover:text-terminal-green transition-colors duration-200 flex items-center gap-1"
+        >
+          back to top ↑
+        </button>
+      </div>
     </footer>
   )
 }

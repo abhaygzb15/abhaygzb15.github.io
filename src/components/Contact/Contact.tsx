@@ -1,45 +1,33 @@
-// TODO: Implement Contact section
-// - Email CTA
-// - Contact form (optional: Formspree / EmailJS integration)
-// - Social links: GitHub, LinkedIn, Twitter/X
-
 const Contact = () => {
   return (
-    <section id="contact" className="section-padding">
-      <div className="container-max text-center max-w-2xl mx-auto">
-        <p className="font-mono text-primary-600 mb-2 text-sm">What's next?</p>
-        <h2 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-        <p className="text-gray-600 mb-8 leading-relaxed">
-          {/* TODO: Customize this message */}
-          I'm currently open to new opportunities. Whether you have a question,
-          a project idea, or just want to say hi — my inbox is always open!
-        </p>
+    <section id="contact" className="py-20 bg-terminal-bg">
+      <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
+
+        {/* ── Header ── */}
+        <div className="reveal">
+          <h2 className="font-mono font-bold text-3xl md:text-4xl text-terminal-green tracking-widest mb-3">
+            <span className="text-terminal-muted mr-3">$</span>
+            GET IN TOUCH
+          </h2>
+          <p className="font-mono text-terminal-muted text-sm mb-12">
+            <span className="mr-2">#</span>
+            Feel free to reach out for collaborations, research, or just a friendly chat
+          </p>
+        </div>
+
         <a
-          href="mailto:your@email.com" // TODO: Replace with your email
-          className="inline-block px-8 py-4 rounded-lg border-2 border-primary-600 text-primary-600 font-medium hover:bg-primary-600 hover:text-white transition-colors text-lg"
+          href="mailto:abhaygzb15@gmail.com"
+          className="inline-flex items-center gap-2 px-8 py-3 bg-terminal-green text-terminal-bg
+                     font-mono font-bold text-sm tracking-widest rounded
+                     hover:bg-terminal-green-glow transition-all duration-200"
         >
-          Say Hello
+          SEND ME AN EMAIL
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-4 h-4">
+            <path strokeLinecap="round" strokeLinejoin="round"
+              d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+          </svg>
         </a>
 
-        {/* TODO: Add social links */}
-        <div className="flex justify-center gap-6 mt-12 text-gray-400">
-          <a
-            href="https://github.com/abhaygzb15"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gray-900 transition-colors text-sm font-medium"
-          >
-            GitHub
-          </a>
-          <a
-            href="#" // TODO: Add LinkedIn URL
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gray-900 transition-colors text-sm font-medium"
-          >
-            LinkedIn
-          </a>
-        </div>
       </div>
     </section>
   )

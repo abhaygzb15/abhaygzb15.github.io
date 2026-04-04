@@ -1,52 +1,59 @@
-// TODO: Implement Skills section
-// - Group skills by category: Languages, Frameworks, Tools, Cloud
-// - Skill cards / tags with icons (react-icons or SVG)
-// - Proficiency indicators (optional)
+import { IconCloud } from '../magicui/icon-cloud'
 
-const skillCategories = [
-  {
-    title: 'Languages',
-    // TODO: Add your languages
-    skills: ['TypeScript', 'JavaScript', 'Python', 'Go'],
-  },
-  {
-    title: 'Frameworks & Libraries',
-    // TODO: Add your frameworks
-    skills: ['React', 'Node.js', 'Express', 'Next.js'],
-  },
-  {
-    title: 'Tools & Platforms',
-    // TODO: Add your tools
-    skills: ['Git', 'Docker', 'GitHub Actions', 'Linux'],
-  },
+// Slugs from simpleicons.org matching Abhay's tech stack
+const slugs = [
+  'python',
+  'flutter',
+  'kotlin',
+  'dart',
+  'firebase',
+  'android',
+  'androidstudio',
+  'mysql',
+  'git',
+  'refinedgithub',
+  'figma',
+  'canva',
+  'visualstudiocode',
+  'tensorflow',
+  'streamlit',
+  'numpy',
+  'pandas',
+  'jupyter',
+  'dialogflow',
+  'powerbi',
 ]
 
-const Skills = () => {
-  return (
-    <section id="skills" className="section-padding">
-      <div className="container-max">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Skills</h2>
-        <div className="w-12 h-1 bg-primary-500 mb-10 rounded" />
+const WrenchIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5 text-terminal-green">
+    <path strokeLinecap="round" strokeLinejoin="round"
+      d="M11.42 15.17L17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l5.654-4.655m5.896-3.42c.21-.328.31-.686.29-1.043a3.86 3.86 0 0 0-3.53-3.75 3.9 3.9 0 0 0-2.6.79L6.75 6.75" />
+  </svg>
+)
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {skillCategories.map((category) => (
-            <div key={category.title}>
-              <h3 className="font-semibold text-gray-900 mb-4">
-                {category.title}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {category.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1 rounded-full text-sm bg-primary-50 text-primary-700 border border-primary-200"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+const Skills = () => {
+  const images = slugs.map((slug) => `https://cdn.simpleicons.org/${slug}/${slug}`)
+
+  return (
+    <section id="skills" className="section-padding bg-terminal-bg">
+      <div className="container-max md:pl-8">
+
+        {/* Header */}
+        <div className="reveal flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <WrenchIcon />
+            <h2 className="font-mono font-bold text-gray-100 text-3xl">Skills</h2>
+          </div>
         </div>
+
+        {/* Icon cloud */}
+        <div
+          className="reveal relative w-full h-[400px] md:h-[480px] rounded-xl border border-terminal-border overflow-hidden bg-terminal-bg-card"
+          style={{ transitionDelay: '100ms' }}
+        >
+          <IconCloud images={images} />
+        </div>
+
       </div>
     </section>
   )
