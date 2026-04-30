@@ -1,5 +1,6 @@
-// Fixed floating social icons — bottom-left, no border strip
-// Hidden on mobile, visible md+
+// Fixed floating social icons — bottom-left
+// Desktop: vertical sidebar with label revealed on hover
+// Mobile: horizontal bar at bottom
 
 const GithubIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -50,7 +51,7 @@ const socialLinks = [
 
 const SocialSidebar = () => (
   <>
-    {/* ── Desktop: vertical left sidebar ── */}
+    {/* ── Desktop: vertical left sidebar with hover label ── */}
     <aside className="hidden md:flex fixed left-6 bottom-14 z-40 flex-col items-center gap-6">
       {socialLinks.map(({ href, icon, label }) => (
         <a
@@ -59,10 +60,21 @@ const SocialSidebar = () => (
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
-          className="text-gray-500 hover:text-terminal-green transition-all duration-200
-                     hover:scale-125 hover:drop-shadow-[0_0_6px_rgba(0,200,83,0.7)]"
+          className="group relative flex items-center text-gray-500 hover:text-terminal-green
+                     transition-all duration-200 hover:scale-125
+                     hover:drop-shadow-[0_0_6px_rgba(0,200,83,0.7)]"
         >
           {icon}
+          {/* Label slides in from the right on hover */}
+          <span
+            className="absolute left-full ml-3
+                       font-mono text-xs text-terminal-green whitespace-nowrap
+                       opacity-0 -translate-x-2 pointer-events-none
+                       group-hover:opacity-100 group-hover:translate-x-0
+                       transition-all duration-200"
+          >
+            {label}
+          </span>
         </a>
       ))}
       <div className="w-px h-16 bg-terminal-border" />
