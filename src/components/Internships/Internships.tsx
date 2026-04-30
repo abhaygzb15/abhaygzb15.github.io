@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
+import { AnimatedList } from '@/components/ui/animated-list'
+import { Lens } from '@/components/ui/lens'
 
 interface Experience {
   id: number
@@ -75,6 +78,16 @@ const experiences: Experience[] = [
   },
 ]
 
+// Stagger variants for the skill tags inside expanded panel
+const skillContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } },
+}
+const skillItemVariants = {
+  hidden: { opacity: 0, scale: 0.75, y: 6 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { type: 'spring' as const, stiffness: 400, damping: 28 } },
+}
+
 const Internships = () => {
   const [expandedId, setExpandedId] = useState<number | null>(0)
 
@@ -97,90 +110,122 @@ const Internships = () => {
           </h2>
         </div>
 
-        {/* Experiences accordion — staggered entrance */}
-        <div className="stagger-children max-w-4xl mx-auto space-y-3">
-          {experiences.map((experience) => (
-            <div key={experience.id} className="overflow-hidden rounded-lg border border-terminal-border">
-              {/* Header */}
-              <button
-                onClick={() => setExpandedId(expandedId === experience.id ? null : experience.id)}
-                className={`w-full px-6 py-4 flex items-center justify-between group transition-all duration-300
-                  ${expandedId === experience.id
-                    ? 'bg-terminal-green/15 border-b border-terminal-green/30'
-                    : 'bg-terminal-bg-card hover:bg-terminal-green/10'
-                  }`}
-              >
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-white text-base">
-                    {experience.role}
-                    <span className="text-terminal-muted font-normal mx-2">@</span>
-                    <span className="text-terminal-green">{experience.company}</span>
-                  </h3>
-                </div>
-                <div className="flex items-center gap-6 shrink-0 ml-4">
-                  <span className="font-mono text-sm text-gray-400 hidden sm:block">{experience.duration}</span>
-                  <span
-                    className={`font-mono text-terminal-green text-xl transition-transform duration-300 ${
-                      expandedId === experience.id ? 'rotate-45' : ''
-                    }`}
-                  >
-                    +
-                  </span>
-                </div>
-              </button>
-
-              {/* Expandable content */}
+        {/* Experiences — animated list entrance */}
+        <AnimatedList className="max-w-4xl mx-auto gap-3" delay={180}>
+          {experiences.map((experience) => {
+            const isOpen = expandedId === experience.id
+            return (
               <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  expandedId === experience.id ? 'max-h-[600px]' : 'max-h-0'
-                }`}
+                key={experience.id}
+                className="overflow-hidden rounded-lg border border-terminal-border"
               >
-                <div className="bg-terminal-bg border-l-2 border-terminal-green px-6 py-6">
-                  <div className="flex flex-col lg:flex-row gap-6">
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-                        <div className="flex items-center gap-2 text-gray-400 font-mono text-sm">
-                          <span className="text-terminal-green">📍</span>
-                          {experience.location}
-                        </div>
-                        <a
-                          href={experience.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-4 py-1.5
-                                     border border-terminal-green text-terminal-green font-mono text-sm rounded
-                                     hover:bg-terminal-green hover:text-terminal-bg transition-all duration-200 w-fit"
-                        >
-                          View →
-                        </a>
-                      </div>
-                      <p className="text-gray-300 text-sm leading-relaxed mb-5">
-                        {experience.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {experience.skills.map((skill) => (
-                          <span
-                            key={skill}
-                            className="px-3 py-1 bg-terminal-green/10 border border-terminal-green/40
-                                       text-terminal-green font-mono text-xs rounded-full
-                                       hover:bg-terminal-green/20 transition-colors"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="lg:w-56 shrink-0">
-                      <div className="w-full aspect-square rounded-lg overflow-hidden border border-terminal-green/30 bg-terminal-bg-card">
-                        <img src={experience.image} alt={experience.company} className="w-full h-full object-cover" />
-                      </div>
-                    </div>
+                {/* Header — shimmer CSS class applied when expanded */}
+                <button
+                  onClick={() => setExpandedId(isOpen ? null : experience.id)}
+                  className={`w-full px-6 py-4 flex items-center justify-between group transition-colors duration-300
+                    ${isOpen ? 'experience-header-active border-b border-terminal-green/30' : 'bg-terminal-bg-card hover:bg-terminal-green/10'}`}
+                >
+                  <div className="flex-1 text-left">
+                    <h3 className="font-bold text-white text-base">
+                      {experience.role}
+                      <span className="text-terminal-muted font-normal mx-2">@</span>
+                      <span className="text-terminal-green">{experience.company}</span>
+                    </h3>
                   </div>
-                </div>
+                  <div className="flex items-center gap-6 shrink-0 ml-4">
+                    <span className="font-mono text-sm text-gray-400 hidden sm:block">{experience.duration}</span>
+                    {/* Show / Hide pill */}
+                    <span
+                      className={`font-mono text-xs px-3 py-1 rounded border transition-all duration-200
+                        ${isOpen
+                          ? 'border-terminal-green text-terminal-green bg-terminal-green/10'
+                          : 'border-terminal-border text-terminal-muted group-hover:border-terminal-green/50 group-hover:text-terminal-green'
+                        }`}
+                    >
+                      {isOpen ? 'Hide' : 'Show'}
+                    </span>
+                  </div>
+                </button>
+
+                {/* Expandable panel — smooth height + fade via AnimatePresence */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="panel"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div className="bg-terminal-bg border-l-2 border-terminal-green px-6 py-6">
+                        <div className="flex flex-col lg:flex-row gap-6">
+                          <div className="flex-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+                              <div className="flex items-center gap-2 text-gray-400 font-mono text-sm">
+                                <span className="text-terminal-green">📍</span>
+                                {experience.location}
+                              </div>
+                              <a
+                                href={experience.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-4 py-1.5
+                                           border border-terminal-green text-terminal-green font-mono text-sm rounded
+                                           hover:bg-terminal-green hover:text-terminal-bg transition-all duration-200 w-fit"
+                              >
+                                View →
+                              </a>
+                            </div>
+
+                            <p className="text-gray-300 text-sm leading-relaxed mb-5">
+                              {experience.description}
+                            </p>
+
+                            {/* Staggered skill tags */}
+                            <motion.div
+                              className="flex flex-wrap gap-2"
+                              variants={skillContainerVariants}
+                              initial="hidden"
+                              animate="visible"
+                            >
+                              {experience.skills.map((skill) => (
+                                <motion.span
+                                  key={skill}
+                                  variants={skillItemVariants}
+                                  className="px-3 py-1 bg-terminal-green/10 border border-terminal-green/40
+                                             text-terminal-green font-mono text-xs rounded-full
+                                             hover:bg-terminal-green/20 transition-colors"
+                                >
+                                  {skill}
+                                </motion.span>
+                              ))}
+                            </motion.div>
+                          </div>
+
+                          {/* Company image with Lens zoom */}
+                          <div className="lg:w-56 shrink-0">
+                            <Lens
+                              className="w-full aspect-square rounded-lg overflow-hidden border border-terminal-green/30 bg-terminal-bg-card"
+                              lensSize={120}
+                              zoomFactor={1.8}
+                            >
+                              <img
+                                src={experience.image}
+                                alt={experience.company}
+                                className="w-full h-full object-cover"
+                              />
+                            </Lens>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </div>
-          ))}
-        </div>
+            )
+          })}
+        </AnimatedList>
       </div>
     </section>
   )

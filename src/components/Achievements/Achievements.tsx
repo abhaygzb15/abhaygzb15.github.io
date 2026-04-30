@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 
 type Category = 'hackathon' | 'exam' | 'certification' | 'volunteer'
 
 interface Achievement {
   category: Category
-  label: string       // short badge label
+  label: string
   title: string
   subtitle?: string
   date?: string
@@ -102,21 +103,19 @@ const categoryStyle: Record<Category, { accent: string }> = {
   volunteer:    { accent: 'text-orange-400 border-orange-400/40' },
 }
 
-const CARD_W    = 300  // px
-const INTERVAL  = 3000 // ms between auto-advances
+const CARD_W   = 300
+const INTERVAL = 3000
 
 const Achievements = () => {
   const scrollRef    = useRef<HTMLDivElement>(null)
   const cardRefs     = useRef<(HTMLDivElement | null)[]>([])
   const [activeIdx, setActiveIdx] = useState(0)
-  const activeIdxRef = useRef(0)   // mirror for use inside interval
+  const activeIdxRef = useRef(0)
   const isPaused     = useRef(false)
   const timerRef     = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // Keep ref in sync with state
   useEffect(() => { activeIdxRef.current = activeIdx }, [activeIdx])
 
-  // Smooth-scroll to a card (centers it inside the scroll container only)
   const scrollTo = useCallback((idx: number) => {
     const el   = scrollRef.current
     const card = cardRefs.current[idx]
@@ -126,7 +125,6 @@ const Achievements = () => {
     }
   }, [])
 
-  // Start auto-advance timer
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
@@ -137,7 +135,6 @@ const Achievements = () => {
     }, INTERVAL)
   }, [scrollTo])
 
-  // Detect which card is closest to the scroll-container center
   const handleScroll = useCallback(() => {
     const el = scrollRef.current
     if (!el) return
@@ -153,7 +150,6 @@ const Achievements = () => {
     setActiveIdx(closest)
   }, [])
 
-  // Start at first card, then kick off timer
   useEffect(() => {
     const el   = scrollRef.current
     const card = cardRefs.current[0]
@@ -184,18 +180,14 @@ const Achievements = () => {
       <div
         ref={scrollRef}
         className="flex items-center gap-5 overflow-x-scroll py-10 px-4"
-        style={{
-          scrollSnapType: 'x mandatory',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
+        style={{ scrollSnapType: 'x mandatory', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         onScroll={handleScroll}
         onMouseEnter={() => { isPaused.current = true }}
         onMouseLeave={() => { isPaused.current = false }}
         onTouchStart={() => { isPaused.current = true }}
         onTouchEnd={() => { setTimeout(() => { isPaused.current = false }, 1500) }}
       >
-        {/* Left spacer so first card can center */}
+        {/* Left spacer */}
         <div className="shrink-0" style={{ width: `calc(50vw - ${CARD_W / 2}px)` }} />
 
         {achievements.map((item, i) => {
@@ -213,7 +205,7 @@ const Achievements = () => {
                   scrollTo(i)
                 }
               }}
-              className="shrink-0 cursor-pointer group"
+              className="shrink-0 cursor-pointer"
               style={{
                 width: CARD_W,
                 scrollSnapAlign: 'center',
@@ -222,23 +214,42 @@ const Achievements = () => {
                 transition: 'transform 0.35s ease, opacity 0.35s ease',
               }}
             >
-              {/* Badge card body */}
+              {/* Card body — pulsing glow CSS class on active */}
               <div
-                className={`relative bg-terminal-bg-card border rounded-2xl p-5 h-[280px] flex flex-col justify-between
-                  ${isActive
-                    ? 'border-terminal-green shadow-terminal'
-                    : 'border-terminal-border'}
-                `}
+                className={`relative bg-terminal-bg-card rounded-2xl p-5 h-[280px] flex flex-col justify-between overflow-hidden
+                  ${isActive ? 'achievement-card-active' : 'border border-terminal-border'}`}
               >
+                {/* Shimmer sweep overlay (motion, only on active) */}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.div
+                      key="shimmer"
+                      className="absolute inset-0 pointer-events-none rounded-2xl"
+                      style={{
+                        background:
+                          'linear-gradient(105deg, transparent 30%, rgba(0,200,83,0.18) 50%, transparent 70%)',
+                        backgroundSize: '200% 100%',
+                      }}
+                      initial={{ backgroundPosition: '-200% center' }}
+                      animate={{ backgroundPosition: '200% center' }}
+                      transition={{ duration: 2.2, repeat: Infinity, ease: 'linear', repeatDelay: 0.6 }}
+                    />
+                  )}
+                </AnimatePresence>
+
                 {/* Top: category badge */}
-                <div className="flex items-start justify-end">
-                  <span className={`font-mono text-[10px] font-semibold uppercase tracking-widest border px-2 py-0.5 rounded-full ${accent}`}>
+                <div className="relative flex items-start justify-end z-10">
+                  <motion.span
+                    className={`font-mono text-[10px] font-semibold uppercase tracking-widest border px-2 py-0.5 rounded-full ${accent}`}
+                    animate={isActive ? { scale: [1, 1.08, 1] } : { scale: 1 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                  >
                     {item.label}
-                  </span>
+                  </motion.span>
                 </div>
 
                 {/* Middle: title + subtitle */}
-                <div className="space-y-1">
+                <div className="relative z-10 space-y-1">
                   <h3 className={`font-mono font-bold text-base leading-snug ${isActive ? 'text-terminal-green' : 'text-gray-200'}`}>
                     {item.title}
                   </h3>
@@ -249,8 +260,8 @@ const Achievements = () => {
                   )}
                 </div>
 
-                {/* Bottom: description + date + view button */}
-                <div className="space-y-2">
+                {/* Bottom: description + date + link */}
+                <div className="relative z-10 space-y-2">
                   <p className="font-mono text-gray-400 text-[11px] leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
@@ -265,11 +276,8 @@ const Achievements = () => {
                         href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          window.open(item.link, '_blank')
-                        }}
-                        className="font-mono text-[10px] font-semibold text-terminal-green hover:text-terminal-green-glow transition-colors cursor-pointer underline"
+                        onClick={(e) => { e.stopPropagation(); window.open(item.link, '_blank') }}
+                        className="font-mono text-[10px] font-semibold text-terminal-green hover:text-terminal-green-glow transition-colors underline"
                       >
                         VIEW →
                       </a>
@@ -277,9 +285,14 @@ const Achievements = () => {
                   </div>
                 </div>
 
-                {/* Active indicator line at bottom */}
+                {/* Active indicator bottom line */}
                 {isActive && (
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-terminal-green rounded-full" />
+                  <motion.div
+                    className="absolute bottom-0 left-1/2 h-0.5 bg-terminal-green rounded-full"
+                    initial={{ width: 0, x: '-50%' }}
+                    animate={{ width: 48, x: '-50%' }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                  />
                 )}
               </div>
             </div>
@@ -293,14 +306,14 @@ const Achievements = () => {
       {/* Dot indicators */}
       <div className="flex justify-center gap-2 mt-2">
         {achievements.map((_, i) => (
-          <button
+          <motion.button
             key={i}
             onClick={() => scrollTo(i)}
-            className={`rounded-full transition-all duration-300 ${
-              i === activeIdx
-                ? 'w-6 h-1.5 bg-terminal-green'
-                : 'w-1.5 h-1.5 bg-terminal-border hover:bg-terminal-muted'
+            className={`rounded-full transition-colors duration-300 ${
+              i === activeIdx ? 'bg-terminal-green' : 'bg-terminal-border hover:bg-terminal-muted'
             }`}
+            animate={i === activeIdx ? { width: 24, height: 6 } : { width: 6, height: 6 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             aria-label={`Go to achievement ${i + 1}`}
           />
         ))}

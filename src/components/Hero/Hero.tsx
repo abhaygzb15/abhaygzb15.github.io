@@ -1,4 +1,5 @@
-// Place your photo as public/picture.png — it will be served at /picture.png
+import Text3DFlip from '@/components/ui/text-3d-flip'
+import { Lens } from '@/components/ui/lens'
 
 interface HeroProps {
   onLaunchTerminal: () => void;
@@ -22,15 +23,22 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
       {/* Offset content right on md+ to clear the sidebar */}
       <div className="relative z-10 w-full section-padding pt-20 md:pt-24 md:pl-20 lg:pl-28">
         <div className="container-max flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+
           {/* ── Photo: top on mobile, right column on desktop ── */}
           <div className="flex justify-center items-center order-first lg:order-last pt-6 lg:pt-0">
             <div className="relative group">
               <div className="absolute -inset-1 rounded-2xl bg-terminal-green/20 blur-md group-hover:bg-terminal-green/35 transition-all duration-500" />
-              <div className="relative w-36 h-44 sm:w-52 sm:h-64 lg:w-80 lg:h-[420px] rounded-2xl overflow-hidden border border-terminal-green/30 shadow-terminal-lg">
+
+              {/* Lens wraps the photo container */}
+              <Lens
+                className="relative w-36 h-44 sm:w-52 sm:h-64 lg:w-80 lg:h-[420px] rounded-2xl overflow-hidden border border-terminal-green/30 shadow-terminal-lg"
+                lensSize={140}
+                zoomFactor={1.7}
+              >
                 <img
                   src="/assets/picture.png"
                   alt="Abhay Pawar"
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top"
                   onError={(e) => {
                     const target = e.currentTarget;
                     target.style.display = "none";
@@ -42,18 +50,27 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
                   }}
                 />
                 <div className="absolute inset-0 bg-terminal-green/8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-              </div>
+              </Lens>
             </div>
           </div>
 
           {/* ── Left: Text ── */}
           <div className="space-y-6 order-last lg:order-first">
-            {/* Name */}
+            {/* Name — per-character 3D flip on hover (same text, both faces) */}
             <h1
-              className="font-mono font-bold text-terminal-green leading-tight terminal-glow"
+              className="font-mono font-bold leading-tight"
               style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)" }}
             >
-              Abhay Pawar
+              <Text3DFlip
+                as="span"
+                rotateDirection="top"
+                staggerFrom="center"
+                staggerDuration={0.04}
+                textClassName="text-terminal-green terminal-glow"
+                flipTextClassName="text-terminal-green terminal-glow opacity-80"
+              >
+                Abhay Pawar
+              </Text3DFlip>
             </h1>
 
             {/* Role */}
@@ -85,7 +102,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
               </p>
             </div>
 
-            {/* CTA Buttons — row 1: Contact + Resume, row 2: Launch Terminal */}
+            {/* CTA Buttons */}
             <div className="flex flex-col gap-3 pt-2 max-w-xs">
               {/* Row 1 */}
               <div className="grid grid-cols-2 gap-3">
@@ -110,7 +127,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
                 </a>
 
                 <a
-                  href="https://drive.google.com/file/d/1cj7Gd5-n5eHnqHADF4v6lfwJvUPr5O7s/view?usp=sharing" // TODO: Add your resume PDF link
+                  href="https://drive.google.com/file/d/1cj7Gd5-n5eHnqHADF4v6lfwJvUPr5O7s/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-4 py-2.5 border border-terminal-green text-terminal-green font-mono text-sm font-semibold rounded hover:bg-terminal-green/10 hover:scale-105 transition-all duration-200"
