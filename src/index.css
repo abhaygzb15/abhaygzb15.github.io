@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Circular favicon styling ── */
+link[rel="icon"],
+.favicon {
+    border-radius: 50%;
+}
+
+img[src*="favicon"] {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 /* ── Theme CSS variables ── */
 /* Default = dark. Light overrides set by html.light */
 
