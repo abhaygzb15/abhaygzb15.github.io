@@ -12,17 +12,16 @@ interface BlogPost {
   excerpt: string
   date: string
   readTime: string
-  cover?: string   // path to cover image, e.g. /assets/blog/post1.png
-  link: string     // URL to the blog post
+  cover?: string
+  link: string
 }
 
 const posts: BlogPost[] = [
-
   {
     slug: 'SIH',
     tag: 'Experience',
     title: 'How We Made It to the Smart India Hackathon Finals Twice',
-    excerpt: 'More than a hackathon — a journey of building, learning, traveling, and growing together as a team.',
+    excerpt: 'More than a hackathon - a journey of building, learning, traveling, and growing together as a team.',
     date: 'March 2026',
     readTime: '9 min read',
     cover: '/assets/result.jpeg',
@@ -31,11 +30,12 @@ const posts: BlogPost[] = [
   {
     slug: 'Govtech',
     tag: 'Experience',
-    title: 'What My First 60 Days in GovTech Taught Me',
-    excerpt: 'Two months in, everything changed. Everything outside my comfort zone had to be faced. Here\'s what the GovTech experience looked like:',
+    title: 'What My First 60 Days in GovTech Taught Me',
+    excerpt: 'Two months in, everything changed. Everything outside my comfort zone had to be faced. Here is what the GovTech experience looked like.',
     date: 'April 2026',
     readTime: '5 min read',
-    cover: '/assets/govtech.jpeg', link: 'https://medium.com/@abhaygzb15/what-my-first-60-days-in-govtech-taught-me-dfa3c20ea7eb',
+    cover: '/assets/govtech.jpeg',
+    link: 'https://medium.com/@abhaygzb15/what-my-first-60-days-in-govtech-taught-me-dfa3c20ea7eb',
   },
   {
     slug: 'Digilocker',
@@ -47,110 +47,127 @@ const posts: BlogPost[] = [
     cover: '/assets/digilocker.jpg',
     link: 'https://medium.com/@abhaygzb15/digilocker-integration-architecture-a-secure-oauth-based-system-2b844ba63ccc',
   },
-
 ]
 
-// Colour palette per tag (used in both the filter pill and card badge)
-const tagColor: Record<Exclude<Tag, 'All'>, { pill: string; badge: string; cover: string }> = {
-  Technical: {
-    pill: 'bg-cyan-50   text-cyan-700   border-cyan-200',
-    badge: 'bg-cyan-100  text-cyan-700',
-    cover: 'from-cyan-100 to-cyan-200',
-  },
-  Experience: {
-    pill: 'bg-purple-50  text-purple-700 border-purple-200',
-    badge: 'bg-purple-100 text-purple-700',
-    cover: 'from-purple-100 to-purple-200',
-  },
-
+const tagTone: Record<Exclude<Tag, 'All'>, string> = {
+  Technical: 'text-[#8b93ff]',
+  Experience: 'text-terminal-green',
 }
 
 const TAGS: Tag[] = ['All', 'Technical', 'Experience']
-
 
 export default function Blogs() {
   const [active, setActive] = useState<Tag>('All')
   const visible = active === 'All' ? posts : posts.filter((p) => p.tag === active)
 
   return (
-    <div className="min-h-screen text-gray-100">
+    <div className="blog-page min-h-screen overflow-hidden bg-black text-white">
       <Navbar />
 
-      {/* ── Header ── */}
-      <header className="pt-20 pb-12 px-6 md:px-12 lg:px-24 container-max mx-auto max-w-4xl">
-        <h1 className="font-mono font-bold text-4xl md:text-5xl text-gray-100 leading-tight mb-3">
-          Blog<span className="text-terminal-green">.</span>
-        </h1>
-        <p className="font-mono text-gray-400 text-base leading-relaxed">
-          Thoughts on engineering, research, recent technology trends, and the occasional lesson learned the hard way.
-        </p>
-      </header>
+      <main className="relative px-4 pb-20 pt-24 sm:px-6 md:px-10 lg:px-16">
+        <div className="blog-ribbon blog-ribbon-top" aria-hidden="true" />
+        <div className="blog-ribbon blog-ribbon-left" aria-hidden="true" />
+        <div className="blog-ribbon blog-ribbon-bottom" aria-hidden="true" />
 
-      {/* ── Filter Tags ── */}
-      <div className="px-6 md:px-12 lg:px-24 pb-8 container-max mx-auto max-w-4xl">
-        <div className="flex flex-wrap gap-2">
-          {TAGS.map((tag) => {
-            const count = tag === 'All' ? posts.length : posts.filter((p) => p.tag === tag).length
-            return (
-              <button
-                key={tag}
-                onClick={() => setActive(tag)}
-                className={`font-mono text-xs px-3 py-1.5 rounded-full border transition-all duration-200 ${active === tag
-                  ? 'bg-terminal-green text-terminal-bg border-terminal-green'
-                  : 'text-terminal-muted border-terminal-border hover:border-terminal-green hover:text-terminal-green'
-                  }`}
+        <section className="blog-panel relative mx-auto max-w-7xl px-5 py-10 sm:px-8 md:px-12 lg:px-24 lg:py-20">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-2xl">
+              <span className="inline-flex rounded-full bg-terminal-green/20 px-4 py-2 font-sans text-sm font-semibold text-terminal-green ring-1 ring-terminal-green/20">
+                Blog Post
+              </span>
+              <h1 className="mt-6 font-sans text-4xl font-bold leading-tight tracking-normal text-white md:text-5xl">
+                Latest Article
+              </h1>
+              <p className="mt-5 max-w-3xl font-sans text-base leading-8 text-white/75 md:text-lg">
+                Thoughts on engineering, research, recent technology trends, and the occasional lesson learned the hard way.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-end">
+              <a
+                href="https://medium.com/@abhaygzb15"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-terminal-green px-7 font-sans text-base font-bold text-black shadow-[0_18px_45px_rgba(0,200,83,0.28)] transition duration-200 hover:-translate-y-0.5 hover:bg-terminal-green-glow focus:outline-none focus:ring-2 focus:ring-terminal-green focus:ring-offset-2 focus:ring-offset-black"
               >
-                {tag}
-                <span className="ml-1.5 opacity-60">{count}</span>
-              </button>
-            )
-          })}
-        </div>
-      </div>
+                View All Posts
+                <span aria-hidden="true" className="text-2xl leading-none">-&gt;</span>
+              </a>
 
-      {/* ── Posts List ── */}
-      <main className="px-6 md:px-12 lg:px-24 pb-20 container-max mx-auto max-w-4xl">
-        <div className="space-y-8">
-          {visible.map((post) => (
-            <article
-              key={post.slug}
-              onClick={() => window.open(post.link, '_blank')}
-              className="group py-6 border-b border-terminal-border last:border-b-0 cursor-pointer transition-colors duration-200 hover:bg-terminal-bg-card/30 px-4 -mx-4 rounded-lg"
-            >
-              {/* Post header */}
-              <div className="flex flex-col gap-3">
-                {/* Title and link */}
-                <h2 className="font-mono font-bold text-xl md:text-2xl text-gray-100 leading-snug group-hover:text-terminal-green transition-colors duration-200">
-                  {post.title}
-                </h2>
-
-                {/* Excerpt */}
-                <p className="font-mono text-gray-400 text-sm md:text-base leading-relaxed max-w-2xl">
-                  {post.excerpt}
-                </p>
-
-                {/* Meta info: date, read time, tag */}
-                <div className="flex items-center gap-3 flex-wrap pt-2">
-                  <span className="font-mono text-xs text-terminal-muted">{post.date}</span>
-                  <span className="text-terminal-border">·</span>
-                  <span className="font-mono text-xs text-terminal-muted">{post.readTime}</span>
-                  <span className="text-terminal-border">·</span>
-                  <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${tagColor[post.tag].badge}`}>
-                    {post.tag}
-                  </span>
-                </div>
+              <div className="flex flex-wrap gap-2 lg:justify-end">
+                {TAGS.map((tag) => {
+                  const count = tag === 'All' ? posts.length : posts.filter((p) => p.tag === tag).length
+                  return (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() => setActive(tag)}
+                      className={`rounded-full border px-3.5 py-2 font-sans text-xs font-bold transition duration-200 ${
+                        active === tag
+                          ? 'border-terminal-green bg-terminal-green text-black'
+                          : 'border-white/10 bg-white/[0.04] text-white/60 hover:border-terminal-green/60 hover:text-terminal-green'
+                      }`}
+                    >
+                      {tag}
+                      <span className={`ml-1.5 ${active === tag ? 'text-black/70' : 'text-white/50'}`}>{count}</span>
+                    </button>
+                  )
+                })}
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          </div>
 
-        {/* Back link */}
-        <div className="mt-16 flex justify-center">
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
+            {visible.map((post) => (
+              <article key={post.slug} className="group">
+                <a href={post.link} target="_blank" rel="noreferrer" className="block">
+                  <div className="relative aspect-[1.75/1] overflow-hidden rounded-[1.4rem] border border-white/15 bg-white/[0.03]">
+                    {post.cover ? (
+                      <img
+                        src={post.cover}
+                        alt=""
+                        className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-[radial-gradient(circle_at_35%_35%,rgba(0,200,83,0.42),transparent_34%),linear-gradient(135deg,#161616,#050505)]" />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+                    <span
+                      aria-hidden="true"
+                      className="absolute bottom-3 right-3 grid h-12 w-12 place-items-center rounded-full border border-white/50 bg-white/10 font-sans text-2xl text-white backdrop-blur-md transition duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:bg-terminal-green group-hover:text-black"
+                    >
+                      /&gt;
+                    </span>
+                  </div>
+
+                  <div className="mt-5">
+                    <p className={`font-sans text-sm font-bold ${tagTone[post.tag]}`}>{post.tag}</p>
+                    <h2 className="mt-2 font-sans text-2xl font-bold leading-tight text-white transition duration-200 group-hover:text-terminal-green">
+                      {post.title}
+                    </h2>
+                    <p className="mt-3 line-clamp-2 font-sans text-sm leading-6 text-white/70">
+                      {post.excerpt}
+                    </p>
+                    <div className="mt-6 flex items-center justify-between gap-4">
+                      <div className="min-w-0">
+                        <p className="truncate font-sans text-sm font-bold text-white">Abhay Pawar</p>
+                        <p className="font-sans text-xs text-white/50">{post.date}</p>
+                      </div>
+                      <span className="shrink-0 font-sans text-sm text-white/50">{post.readTime}</span>
+                    </div>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <div className="relative z-10 mt-10 flex justify-center">
           <Link
             to="/"
-            className="font-mono text-sm text-terminal-muted hover:text-terminal-green transition-colors duration-200 flex items-center gap-2"
+            className="font-sans text-sm font-semibold text-white/50 transition-colors duration-200 hover:text-terminal-green"
           >
-            <span>←</span> back_to_home
+            back_to_home
           </Link>
         </div>
       </main>
