@@ -9,7 +9,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden bg-terminal-bg"
+      className="relative min-h-screen flex items-center overflow-hidden"
     >
       {/* Radial green glow */}
       <div

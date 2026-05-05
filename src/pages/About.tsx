@@ -4,7 +4,7 @@ import Footer from '../components/Footer/Footer'
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-terminal-bg text-gray-100">
+    <div className="min-h-screen text-gray-100">
       <Navbar />
       <main className="pt-24 pb-20 px-6 md:px-12 lg:px-24 max-w-4xl mx-auto">
 

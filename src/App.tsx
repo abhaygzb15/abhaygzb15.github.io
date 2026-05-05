@@ -58,7 +58,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-terminal-bg text-gray-100 pb-16 md:pb-0">
+    <div className="min-h-screen text-gray-100 pb-16 md:pb-0">
       <Navbar />
       <SocialSidebar />
       <main>
@@ -78,19 +78,21 @@ function Home() {
 function App() {
   return (
     <ThemeProvider>
-    <>
-    <PageLoader />
-    <ScrollToTop />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      {SECTION_ROUTES.map((s) => (
-        <Route key={s} path={`/${s}`} element={<Home />} />
-      ))}
-      <Route path="/blogs" element={<Blogs />} />
-      <Route path="/publications" element={<Publications />} />
-      <Route path="/contact" element={<Contact />} />
-    </Routes>
-    </>
+      <div className="relative min-h-screen bg-terminal-bg">
+        <div className="relative z-10 min-h-screen">
+          <PageLoader />
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            {SECTION_ROUTES.map((s) => (
+              <Route key={s} path={`/${s}`} element={<Home />} />
+            ))}
+            <Route path="/blogs" element={<Blogs />} />
+            <Route path="/publications" element={<Publications />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </div>
+      </div>
     </ThemeProvider>
   );
 }

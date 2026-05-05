@@ -6,7 +6,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-terminal-bg border-t border-terminal-border py-6 px-6 md:px-12 lg:px-24">
+    <footer className="border-t border-terminal-border bg-terminal-bg/70 py-6 px-6 md:px-12 lg:px-24 backdrop-blur-sm">
       <div className="container-max mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="font-mono text-terminal-muted text-xs">
           © {year} Abhay Pawar — Designed &amp; Built by Abhay Pawar

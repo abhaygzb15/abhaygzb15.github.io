@@ -78,7 +78,7 @@ const GithubIcon = () => (
 
 const Projects = () => {
   return (
-    <section id="projects" className="relative section-padding bg-terminal-bg overflow-hidden">
+    <section id="projects" className="relative section-padding overflow-hidden">
 
       {/* Decorative glow blobs */}
       <div

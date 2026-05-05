@@ -35,7 +35,7 @@ const Skills = () => {
   const images = slugs.map((slug) => `https://cdn.simpleicons.org/${slug}/${slug}`)
 
   return (
-    <section id="skills" className="section-padding bg-terminal-bg">
+    <section id="skills" className="section-padding">
       <div className="container-max md:pl-8">
 
         {/* Header */}

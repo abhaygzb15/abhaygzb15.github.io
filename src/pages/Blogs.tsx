@@ -73,7 +73,7 @@ export default function Blogs() {
   const visible = active === 'All' ? posts : posts.filter((p) => p.tag === active)
 
   return (
-    <div className="min-h-screen bg-terminal-bg text-gray-100">
+    <div className="min-h-screen text-gray-100">
       <Navbar />
 
       {/* ── Header ── */}

@@ -32,7 +32,7 @@ const glyphs = ['◆', '▲', '●', '■', '★']
 
 export default function Publications() {
   return (
-    <div className="min-h-screen bg-terminal-bg text-gray-100">
+    <div className="min-h-screen text-gray-100">
       <Navbar />
 
       <main className="pt-24 pb-20 px-6 md:px-16 lg:px-28 max-w-5xl mx-auto">

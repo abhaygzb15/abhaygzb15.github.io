@@ -92,7 +92,7 @@ const Internships = () => {
   const [expandedId, setExpandedId] = useState<number | null>(0)
 
   return (
-    <section id="internships" className="relative section-padding bg-terminal-bg overflow-hidden">
+    <section id="internships" className="relative section-padding overflow-hidden">
       {/* Decorative glow */}
       <div
         className="absolute top-20 right-12 w-48 h-48 rounded-full pointer-events-none opacity-20"
@@ -111,19 +111,20 @@ const Internships = () => {
         </div>
 
         {/* Experiences — animated list entrance */}
-        <AnimatedList className="max-w-4xl mx-auto gap-3" delay={180}>
+        <div className="relative mx-auto w-full max-w-4xl overflow-hidden px-1 pb-10">
+        <AnimatedList className="gap-3" delay={180}>
           {experiences.map((experience) => {
             const isOpen = expandedId === experience.id
             return (
-              <div
+              <figure
                 key={experience.id}
-                className="overflow-hidden rounded-lg border border-terminal-border"
+                className="experience-list-item relative mx-auto min-h-fit w-full cursor-pointer overflow-hidden rounded-2xl"
               >
                 {/* Header — shimmer CSS class applied when expanded */}
                 <button
                   onClick={() => setExpandedId(isOpen ? null : experience.id)}
                   className={`w-full px-6 py-4 flex items-center justify-between group transition-colors duration-300
-                    ${isOpen ? 'experience-header-active border-b border-terminal-green/30' : 'bg-terminal-bg-card hover:bg-terminal-green/10'}`}
+                    ${isOpen ? 'experience-header-active border-b border-terminal-green/30' : 'hover:bg-terminal-green/10'}`}
                 >
                   <div className="flex-1 text-left">
                     <h3 className="font-bold text-white text-base">
@@ -158,7 +159,7 @@ const Internships = () => {
                       transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                       style={{ overflow: 'hidden' }}
                     >
-                      <div className="bg-terminal-bg border-l-2 border-terminal-green px-6 py-6">
+                      <div className="bg-terminal-bg/80 border-l-2 border-terminal-green px-6 py-6">
                         <div className="flex flex-col lg:flex-row gap-6">
                           <div className="flex-1">
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
@@ -222,10 +223,12 @@ const Internships = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </figure>
             )
           })}
         </AnimatedList>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-terminal-bg" />
+        </div>
       </div>
     </section>
   )
