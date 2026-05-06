@@ -1,10 +1,3 @@
-const WrenchIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5 text-terminal-green">
-    <path strokeLinecap="round" strokeLinejoin="round"
-      d="M11.42 15.17L17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l5.654-4.655m5.896-3.42c.21-.328.31-.686.29-1.043a3.86 3.86 0 0 0-3.53-3.75 3.9 3.9 0 0 0-2.6.79L6.75 6.75" />
-  </svg>
-)
-
 interface Skill {
   name: string
   slug?: string
@@ -27,7 +20,7 @@ const categories: Category[] = [
       { name: 'Flutter',        slug: 'flutter' },
       { name: 'Jetpack Compose', localPng: 'jetpack.png' },
       { name: 'Streamlit',      slug: 'streamlit' },
-      { name: 'Android',        slug: 'android' },
+      { name: 'Kotlin',        slug: 'kotlin' },
     ],
   },
   {
@@ -36,7 +29,7 @@ const categories: Category[] = [
     skills: [
       { name: 'Firebase',       slug: 'firebase' },
       { name: 'MySQL',          slug: 'mysql' },
-      { name: 'Power BI',       slug: 'powerbi' },
+      { name: 'Power BI',       localPng: 'powerbi.png' },
       { name: 'TensorFlow',     slug: 'tensorflow' },
       { name: 'Data Analytics', localPng: 'analysis.png' },
       { name: 'AI & ML',        localPng: 'aiml.png' },
