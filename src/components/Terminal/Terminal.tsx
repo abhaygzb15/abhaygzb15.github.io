@@ -39,24 +39,28 @@ const COMMANDS: Record<string, string[]> = {
   ],
 
   about: [
-    "Abhay Pawar - B.Tech IT & Mathematical Innovation",
-    "University of Delhi | Final Year",
+    "Abhay Pawar - Young Professional (Full Stack)",
+    "IHMCL, National Highways Authority of India (NHAI)",
+    "B.Tech IT & Mathematical Innovation | University of Delhi, 2022-26",
+    "CGPA: 9.602 | Gold Medalist",
     "Published researcher (Cryobiology, 2026)",
-    "Interested in Mobile App Development",
+    "Building GovTech, Android, mobile, and data-driven products",
     "Based in New Delhi, India",
   ],
 
   skills: [
-    "Languages   : Python, C, Java, MATLAB",
-    "Mobile      : Flutter, Kotlin, Streamlit, Firebase",
-    "Data & AI   : AI/ML, Data Analysis, MySQL",
-    "Tools       : Git, Figma, Canva, Dialogflow",
-    "Analytics   : Power BI, MS Excel",
+    "Languages & Platforms : C, Python, Flutter, Jetpack Compose, Streamlit, Kotlin",
+    "Data & AI             : Firebase, MySQL, Power BI, TensorFlow, Data Analytics, AI & ML",
+    "Tools & Design        : Git, Android Studio, Figma, Canva, GitHub, MATLAB",
+    "Deployment            : AWS, Docker, Vercel, Render, Google Play Console, Firebase Crashlytics",
   ],
 
   experience: [
-    "Full Stack Engineer | NHAI (Jan 2026 - present)",
-    "  Build for Bharat Fellowship 2026; GovTech",
+    "Young Professional (Full Stack) | IHMCL, NHAI (Aug 2026 - Present)",
+    "  Full-time GovTech role",
+    "",
+    "Full Stack Engineer Intern | IHMCL, NHAI (Jan 2026 - Jul 2026)",
+    "  Build for Bharat Fellowship 2026 | Top 18 of 10,000+ applicants",
     "",
     "Mobile App Developer | NIC, Govt of India (Jun 2025 - Jul 2025)",
     "  Ministry of Housing and Urban Affairs",
@@ -75,29 +79,35 @@ const COMMANDS: Record<string, string[]> = {
   ],
 
   projects: [
-    "Challengers: MMA Fantasy Sports-App (Flutter + Firebase)",
+    "Rajmargyatra Mobile Application (FASTag + REST APIs + Payment Integration)",
+    "MMA Fantasy Sports-App (Flutter + Firebase)",
     "Vision-Language Fusion for Advanced Image Captioning (OpenCV + Pytorch)",
     "Implementing Kinematic Control of Open ManipulatorX (Arduino + Kinematics)",
-    "Athelete Aware: Anti Doping Platform (Flutter + Firebase)",
+    "Athlete Aware: Anti-Doping Platform (Flutter + Firebase)",
     "Food Delivery Chatbot (Streamlit + NLP)",
     "Olympics Data Analysis and Prediction (Analysis + ML Algorithms)",
   ],
 
   resume: [
     "Opening resume...",
-    "→ https://drive.google.com/file/d/10n5q_QsZAzEBDzCpIq7txbHCvXxe9eLV/view?usp=drive_link",
+    "→ https://drive.google.com/file/d/1cj7Gd5-n5eHnqHADF4v6lfwJvUPr5O7s/view?usp=sharing",
   ],
 
   achievements: [
     "SIH 2024 & 2025 Finalist — National Level Hackathon",
+    "Tata Technologies InnoVent - Top 31 / 2822 Teams",
     "Publication in Cryobiology (Elsevier, 2026)",
     "GATE CSE'25 Qualified and AIR 3863 in GATE DA'26",
-    "Semi Finalist in Hackathon Conducted by Tata Technologies",
-    "Semi Finalist in Hackathon Conducted by SAMSUNG",
+    "Samsung Solve For Tomorrow - Top 25, Space & Tech Theme",
     "Event Management Intern in Indian Military Heritage Festival",
   ],
 
-  blogs: ["Read my blogs on Medium:", "https://medium.com/@abhaygzb15"],
+  blogs: [
+    "Latest posts:",
+    "Shift of Governance on WhatsApp (July 2026)",
+    "Evolving Android (July 2026)",
+    "https://medium.com/@abhaygzb15",
+  ],
 
   publications: [
     "Title  : Design of an optimal planning framework for",
