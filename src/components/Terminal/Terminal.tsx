@@ -90,7 +90,7 @@ const COMMANDS: Record<string, string[]> = {
 
   resume: [
     "Opening resume...",
-    "→ https://drive.google.com/file/d/1cj7Gd5-n5eHnqHADF4v6lfwJvUPr5O7s/view?usp=sharing",
+    "→ https://drive.google.com/file/d/1yFfsY4nnRImLJHj9PgvVk_h9o3zqS3t_/view?usp=sharing",
   ],
 
   achievements: [

@@ -129,7 +129,7 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
                 </a>
 
                 <a
-                  href="https://drive.google.com/file/d/1cj7Gd5-n5eHnqHADF4v6lfwJvUPr5O7s/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1yFfsY4nnRImLJHj9PgvVk_h9o3zqS3t_/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-4 py-2.5 border border-terminal-green text-terminal-green font-mono text-sm font-semibold rounded hover:bg-terminal-green/10 hover:scale-105 transition-all duration-200"
