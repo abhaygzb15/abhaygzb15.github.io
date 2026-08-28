@@ -75,30 +75,32 @@ const Hero = ({ onLaunchTerminal }: HeroProps) => {
 
             {/* Role */}
             <p className="font-mono text-gray-300 text-lg md:text-xl">
-              B.Tech IT <span className="text-gray-400">@</span>{" "}
+              Android Developer <span className="text-gray-400">@</span>{" "}
               <span className="text-gray-200 border-b border-dotted border-gray-500 pb-0.5">
-                University of Delhi
+                IHMCL, National Highways Authority of India (NHAI)
               </span>
             </p>
 
-            {/* Bio — 4 lines */}
+            {/* Bio — 5 lines */}
             <div className="font-mono text-gray-400 text-sm leading-relaxed max-w-md space-y-1">
               <p>
-                <span className="text-terminal-green">{">"}</span> Final Year
-                Undergrad at Cluster Innovation Centre
+                <span className="text-terminal-green">{">"}</span> Graduated in Information
+                Technology and Mathematical Innovation from the University of Delhi, 2022-26.
               </p>
               <p>
-                <span className="text-terminal-green">{">"}</span> Based in New
-                Delhi
+                <span className="text-terminal-green">{">"}</span> CGPA: 9.602 — Gold Medalist
               </p>
               <p>
-                <span className="text-terminal-green">{">"}</span> Open to dev
-                oppurtunities in Mobile App, Data Analysis & AI
+                <span className="text-terminal-green">{">"}</span> Based in New Delhi
               </p>
               <p>
-                <span className="text-terminal-green">{">"}</span> Driven to
-                build scalable software with growing startups and tech companies
-                — creating impact at scale, in India and beyond.
+                <span className="text-terminal-green">{">"}</span> Open to development
+                opportunities in Android, Mobile, Kotlin, Flutter & Data Analysis
+              </p>
+              <p>
+                <span className="text-terminal-green">{">"}</span> Enthusiastic about working
+                on large user-base projects with growing startups and in the GovTech sector —
+                with a long-term vision to contribute towards solving child hunger.
               </p>
             </div>
 

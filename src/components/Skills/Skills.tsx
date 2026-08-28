@@ -47,6 +47,18 @@ const categories: Category[] = [
       { name: 'MATLAB',         localPng: 'matlab.png' },
     ],
   },
+  {
+    label: 'Deployment',
+    prefix: '04',
+    skills: [
+      { name: 'AWS',           localPng: 'aws.png'},
+      { name: 'Docker',         slug: 'docker' },
+      { name: 'Vercel',          slug: 'vercel' },
+      { name: 'Render',          localPng: 'render.png' },
+      { name: 'Google Play Console',         slug: 'googleplay' },
+      { name: 'Firebase Crashlytics',         slug: 'firebase' },
+    ],
+  },
 ]
 
 const Initials = ({ name }: { name: string }) => {

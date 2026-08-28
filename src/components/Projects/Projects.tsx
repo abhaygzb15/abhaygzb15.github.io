@@ -2,7 +2,7 @@ import { Lens } from '@/components/ui/lens'
 
 interface Project {
   title: string
-  status: 'Completed'
+  status: 'Completed' | 'In Progress'
   description: string
   tech: string[]
   github: string
@@ -11,6 +11,17 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {
+    title: 'Rajmargyatra Mobile Application',
+    status: 'In Progress',
+    description:
+      'Developing a faceless digital Local Pass system for highway users residing within a 20 km radius of toll plazas, including eligibility verification, OTP authentication, and payment integration. Integrated REST APIs for toll plaza discovery, FASTag validation, pass history tracking, and real-time transaction updates. Added an E-Notice feature for viewing and acting on outstanding dues, blacklisted notices, and MLFF violation notices, along with a Toll Plaza Feedback module.',
+    tech: ['Mobile App', 'REST APIs', 'FASTag', 'OTP Authentication', 'Payment Integration'],
+    github: 'private',
+    demo: 'https://play.google.com/store/apps/details?id=com.nhai.rajmargyatra&hl=en_IN',
+
+    image: '/assets/rmy.jpeg',
+  },
   {
     title: 'MMA Fantasy Sports-App',
     status: 'Completed',

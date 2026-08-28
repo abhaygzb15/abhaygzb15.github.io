@@ -18,6 +18,26 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'whatsapp-governance',
+    tag: 'Technical',
+    title: 'Shift of Governance on WhatsApp',
+    excerpt: 'Why WhatsApp is becoming the front door to government services—and how familiar chat experiences can make public service delivery more accessible.',
+    date: 'July 2026',
+    readTime: '4 min read',
+    cover: '/assets/whatsapp.png',
+    link: 'https://medium.com/@abhaygzb15/shift-of-governance-on-whatsapp-53bcc4f68aa8',
+  },
+  {
+    slug: 'evolving-android',
+    tag: 'Technical',
+    title: 'Evolving Android',
+    excerpt: 'Reflections on a year of mobile development, exploring the differences between cross-platform and native Android development.',
+    date: 'July 2026',
+    readTime: '4 min read',
+    cover: '/assets/android.png',
+    link: 'https://medium.com/@abhaygzb15/evolving-android-9921312c9df8',
+  },
+  {
     slug: 'SIH',
     tag: 'Experience',
     title: 'How We Made It to the Smart India Hackathon Finals Twice',
@@ -102,11 +122,10 @@ export default function Blogs() {
                       key={tag}
                       type="button"
                       onClick={() => setActive(tag)}
-                      className={`rounded-full border px-3.5 py-2 font-sans text-xs font-bold transition duration-200 ${
-                        active === tag
-                          ? 'border-terminal-green bg-terminal-green text-black'
-                          : 'border-white/10 bg-white/[0.04] text-white/60 hover:border-terminal-green/60 hover:text-terminal-green'
-                      }`}
+                      className={`rounded-full border px-3.5 py-2 font-sans text-xs font-bold transition duration-200 ${active === tag
+                        ? 'border-terminal-green bg-terminal-green text-black'
+                        : 'border-white/10 bg-white/[0.04] text-white/60 hover:border-terminal-green/60 hover:text-terminal-green'
+                        }`}
                     >
                       {tag}
                       <span className={`ml-1.5 ${active === tag ? 'text-black/70' : 'text-white/50'}`}>{count}</span>

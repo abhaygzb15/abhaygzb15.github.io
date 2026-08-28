@@ -18,13 +18,13 @@ interface Experience {
 const experiences: Experience[] = [
   {
     id: 1,
-    role: 'Full Stack Engineer',
-    company: 'IHMCL,NHAI',
+    role: 'Young Professional (Full Stack)',
+    company: 'IHMCL, NHAI',
     duration: 'Jan 2026 - Present',
     location: 'Dwarka, New Delhi',
-    link: 'https://www.linkedin.com/posts/bharat-digital-io-fellowship_full-stack-bfbf26-ugcPost-7424396353163833344-bgRI?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD68KCoBsMBV9Nwm6juOJWYF0RAFF_yIc1o',
+    link: 'https://cohort26.bharatdigital.io/',
     description:
-    'Selected in Build for Bharat Fellowship 2026 among the top 18 students out of 10,000+ applicants across India, currently working as an Android Developer on GovTech projects with National Highways Authority of India.',
+    'Selected for the Build for Bharat Fellowship 2026 among the top 18 students out of 10,000+ applicants across India. Worked as a Full Stack Engineer intern from January to July 2026 on GovTech projects with IHMCL and the National Highways Authority of India. Since August 2026, working full time as a Young Professional (Full Stack).',
     skills: ['Kotlin', 'Android', 'Rest API', 'React', 'Databases'],
     image: '/assets/I1.png',
   },
